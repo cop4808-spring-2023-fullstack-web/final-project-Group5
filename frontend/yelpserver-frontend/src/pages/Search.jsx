@@ -24,7 +24,6 @@ const Search = () => {
       console.log(err)
     })
     .then(() => {})
-
   }
 
   return(
