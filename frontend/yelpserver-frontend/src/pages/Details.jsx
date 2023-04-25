@@ -14,7 +14,8 @@ const Details = () => {
     axios.get(`http://localhost:8000/biz/${bizID}`)
     .then(res => {
       console.log(res.data);
-      setBusiness(res.data)
+      setBusiness(res.data);
+      console.log(Object.keys(business).length);
     })
     .catch(err => {
       console.log(err)
@@ -42,6 +43,7 @@ const Details = () => {
           </tr>
         </thead>
         <tbody> 
+          {Object.keys(business).length > 0 &&
             <tr className='h-[200px]'>
               <th className='w-[150px]'>{business.name}</th>
               <td className='w-[250px]'><img src={business.image_url} alt="Business Photo"/></td>
@@ -54,6 +56,7 @@ const Details = () => {
                 Longitude: {business.coordinates.longitude}
               </td>
             </tr>
+          }
         </tbody>
       </Table>
     </div>
