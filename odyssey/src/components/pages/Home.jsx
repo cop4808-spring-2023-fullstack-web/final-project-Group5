@@ -1,10 +1,10 @@
 import "../../App.css";
-import HeroSection from "../HeroSection";
+import VideoSection from "../VideoSection";
 
 export default function Home() {
   return (
     <>
-      <HeroSection />
+      <VideoSection />
     </>
   );
 }

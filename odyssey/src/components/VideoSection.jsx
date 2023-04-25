@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "./Button";
-import "./HeroSection.css";
+import "./VideoSection.css";
 
-const HeroSection = () => {
+const VideoSection = () => {
   return (
     <div className="video-container">
       <video src="/videos/video3.mp4" autoPlay loop muted />
@@ -28,4 +28,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default VideoSection;
