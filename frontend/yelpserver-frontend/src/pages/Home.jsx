@@ -4,7 +4,7 @@ const Home = () => {
   return(
     <div className="flex flex-col flex-fill h-max">
       <h1 className="h1 m-5 text-center font-bold text-primary">Yelp Demo Server</h1>
-      <ul className='flex flex-row justify-center items-center'>
+      <ul className='flex sm:flex-col flex-row justify-center items-center'>
         <li className="m-3">
           <div className="card w-96 bg-primary text-gray rounded-5 rounded-md overflow-hidden">
             <div className="card-body bg-primary">
