@@ -5,8 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Details = () => {
 
-  //let [business, setBusiness] = useState([])
-  let business = React.useRef(null);
+  let [business, setBusiness] = useState('')
 
   function searchBusiness() {
 
@@ -15,9 +14,7 @@ const Details = () => {
     axios.get(`http://localhost:8000/biz/${bizID}`)
     .then(res => {
       console.log(res.data);
-      business = res.data;
-      console.log(Object.keys(business).length);
-      console.log(business.name)
+      setBusiness(res.data)
     })
     .catch(err => {
       console.log(err)
@@ -36,7 +33,7 @@ const Details = () => {
         <thead>
           <tr>
             <th>Name/Link</th>
-            <th>Photo</th>
+            <th className='w-[150px]'>Photo</th>
             <th>Phone</th>
             <th>Reviews</th>
             <th>Rating</th>
@@ -45,17 +42,18 @@ const Details = () => {
           </tr>
         </thead>
         <tbody> 
-          {//#TODO: Data seems to be in 'business' but not rendering here
-          }
-              <tr>
-                <th><a href={business.url}>{business.name}</a></th>
-                <td>{business.image_url}</td>
-                <td>{business.phone}</td>
-                <td>{business.review_count}</td>
-                <td>{business.rating}</td>
-                <td>{business.location}</td>
-                <td>{business.coordinates}</td>
-              </tr> 
+            <tr className='h-[200px]'>
+              <th className='w-[150px]'>{business.name}</th>
+              <td className='w-[250px]'><img src={business.image_url} alt="Business Photo"/></td>
+              <td className='w-[100px]'>{business.phone}</td>
+              <td className='w-[100px]'>{business.review_count}</td>
+              <td className='w-[100px]'>{business.rating}</td>
+              <td className='w-[250px]'>{business.location.address1}</td>
+              <td className='w-[200px]'>
+                Latitude: {business.coordinates.latitude}<br></br>
+                Longitude: {business.coordinates.longitude}
+              </td>
+            </tr>
         </tbody>
       </Table>
     </div>
