@@ -77,7 +77,7 @@ function Navbar() {
           </ul>
           {button && (
             <Button buttonStyle="btn--outline">
-              Profile <i class="fa-solid fa-user"></i>
+              Profile <i className="fa-solid fa-user"></i>
             </Button>
           )}
         </div>
