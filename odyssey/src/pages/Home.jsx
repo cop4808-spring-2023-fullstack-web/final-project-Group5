@@ -1,5 +1,5 @@
-import "../../App.css";
-import VideoSection from "../VideoSection";
+import "../App";
+import VideoSection from "../components/VideoSection";
 
 export default function Home() {
   return (

@@ -28,38 +28,47 @@ function Navbar() {
 
   return (
     <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          <Link to="/" className="navbar-logo" onClick={closeMobileMenu}>
-            Odyssey<i class="fa-solid fa-map-location-dot"></i>
+      <nav className="navbar1">
+        <div className="navbar-container1">
+          <Link to="/" className="navbar-logo1" onClick={closeMobileMenu}>
+            Odyssey<i className="fa-solid fa-map-location-dot"></i>
           </Link>
-          <div className="menu-icon" onClick={handleClick}>
+          <div className="menu-icon1" onClick={handleClick}>
             <i className={Click ? "fas fa-times" : "fas fa-bars"}></i>
           </div>
-          <ul className={Click ? "nav-menu active" : "nav-menu"}>
-            <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+          <ul className={Click ? "nav-menu1 active" : "nav-menu1"}>
+            <li className="nav-item1">
+              <Link to="/explore" className="nav-links1" onClick={closeMobileMenu}>
                 Explore
               </Link>
             </li>
-            <li className="nav-item">
-              <Link to="/about" className="nav-links" onClick={closeMobileMenu}>
+            <li className="nav-item1">
+              <Link to="/itinerary" className="nav-links1" onClick={closeMobileMenu}>
                 Itinerary
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item1">
               <Link
-                to="/projects"
-                className="nav-links"
+                to="/trips"
+                className="nav-links1"
                 onClick={closeMobileMenu}
               >
                 My Trips
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item1">
+              <Link
+                to="/trips"
+                className="nav-links1"
+                onClick={closeMobileMenu}
+              >
+                My Trips
+              </Link>
+            </li>
+            <li className="nav-item1">
               <Link
                 to="/"
-                className="nav-links-mobile"
+                className="nav-links-mobile1"
                 onClick={closeMobileMenu}
               >
                 Profile
