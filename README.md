@@ -1,2 +1,3 @@
-# final-project-Group5
-final-project-Group5 created by GitHub Classroom
+# COP4808 Final Project
+# <i>Odyssey</i> travel planner
+
