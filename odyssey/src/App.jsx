@@ -1,7 +1,7 @@
-import Navbar from "./components/Navbar.jsx";
+import { Navbar } from "./components";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Home, Explore, Itinerary, Trips } from './pages';
+import { Home, Explore, Itinerary, Trips, Favorites } from './pages';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
           <Route path="/explore" element={<Explore />}></Route>
           <Route path="/itinerary" element={<Itinerary />}></Route>
           <Route path="/trips" element={<Trips />}></Route>
+          <Route path="/favorites" element={<Favorites />}></Route>
         </Routes>
       </Router>
     </>
