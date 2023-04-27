@@ -19,30 +19,3 @@
   justify-content: center;
   font-size: 3rem;
 }
-
-.services {
-  background-image: url("");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
-
-.projects {
-  background-image: url("");
-  background-position: center;
-  background-size: fill;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
-
-.aboutme {
-  background-image: url("");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
