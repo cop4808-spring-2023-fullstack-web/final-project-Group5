@@ -8,6 +8,7 @@ const VideoSection = () => {
       <video src="/videos/video3.mp4" autoPlay loop muted />
       <h1>Odyssey</h1>
       <p>Get ready to embark on an epic odyssey</p>
+      <p>with our trip planner</p>
       <div className="hero-btns">
         <Button
           className="btns"
