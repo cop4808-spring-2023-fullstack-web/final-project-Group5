@@ -24,14 +24,14 @@ export default function BusinessCard(props) {
 
   return(
     <>
-      <div className="flex justify-center m-5">
+      <div className="flex justify-center mx-5">
         <Card className="p-4 w-[600px]">
           <div className="flex flex-row">
             <h3>{business.name}</h3>
-            {business && business.hours.is_open_now &&
+            {business && business.hours[0].is_open_now &&
               <i className="m-1 mx-2 text-sm text-green-600">Open</i>
             }
-            {business && !business.hours.is_open_now &&
+            {business && !business.hours[0].is_open_now &&
               <i className="m-1 mx-2 text-sm text-red-600">Closed</i>
             }        
           </div>
@@ -59,13 +59,22 @@ export default function BusinessCard(props) {
           {business &&
             <i className="m-0 text-gray-600">{business.location.city}, {business.location.state}</i>
           }
-          <div>
-            Hours:
+          <div className="flex flex-row">
+            <p>Hours:</p>
+            <div className="m-1 mx-2">
+            {business.hours && business.hours.length > 0 &&
+              Array.from({length: business.hours[0].open.length}, (day) =>
+                <p className="m-0 text-xs">
+                  Mon: {business.hours[0].open[0].start} - {business.hours[0].open[0].end}
+                </p>
+              )
+            }  
+            </div>
           </div>
 
           <div className="absolute bottom-0 right-0 m-2">
             <button >
-              <i class="m-1 fa-solid fa-arrows-rotate" style={{color: '#3fc6f3',}}></i>
+              <i className="m-1 fa-solid fa-arrows-rotate" style={{color: '#3fc6f3',}}></i>
             </button>
             New Recommendation
           </div>
