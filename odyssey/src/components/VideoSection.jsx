@@ -9,7 +9,7 @@ const VideoSection = () => {
       <h1>Odyssey</h1>
       <p>Get ready to embark on an epic odyssey</p>
       <p>with our trip planner</p>
-      <div className="hero-btns">
+      <div className="hero-btns text-center">
         <Button
           className="btns"
           buttonStyle="btn--outline"
