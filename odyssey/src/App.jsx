@@ -4,16 +4,19 @@ import "./App.css";
 import { Home, Explore, Itinerary, Trips, Favorites } from './pages';
 
 function App() {
+
+  const authToken = window.localStorage.getItem('token')
+
   return (
     <>
       <Router>
-        <Navbar />
+        <Navbar token={authToken} />
         <Routes>
-          <Route path="/" exact Component={Home}></Route>
-          <Route path="/explore" element={<Explore />}></Route>
-          <Route path="/itinerary" element={<Itinerary />}></Route>
-          <Route path="/trips" element={<Trips />}></Route>
-          <Route path="/favorites" element={<Favorites />}></Route>
+          <Route path="/" element={<Home token={authToken} />}></Route>
+          <Route path="/explore" element={<Explore token={authToken} />}></Route>
+          <Route path="/itinerary" element={<Itinerary token={authToken} />}></Route>
+          <Route path="/trips" element={<Trips token={authToken} />}></Route>
+          <Route path="/favorites" element={<Favorites token={authToken} />}></Route>
         </Routes>
       </Router>
     </>

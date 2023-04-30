@@ -1,6 +1,12 @@
 import { BusinessCard } from "../components"
+import { useState } from "react"
 
-export default function Favorites() {
+export default function Favorites(props) {
+  //get auth token from state
+  const authToken = props.token
+  //useState for checking authorization status
+  const [authorized, setAuthorized] = useState(props.token)
+
   return(
     <>
       <div className="flex flex-col justify-center">

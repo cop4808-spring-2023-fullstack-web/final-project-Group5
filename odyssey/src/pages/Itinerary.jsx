@@ -1,6 +1,12 @@
 import { BusinessCard } from "../components"
+import { useState } from "react"
 
-export default function Itinerary() {
+export default function Itinerary(props) {
+  //get auth token from state
+  const authToken = props.token
+  //useState for checking authorization status
+  const [authorized, setAuthorized] = useState(props.token)
+
   return(
     <>
       <h1 className='text-center m-5 text-3xl'>Your Current Itinerary</h1>

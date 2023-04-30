@@ -16,6 +16,7 @@ const VideoSection = () => {
       window.localStorage.setItem('auth', 'true');
       userCred.getIdToken().then((token) => {
         setToken(token)
+        window.localStorage.setItem('token', token)
       })
     })
   })

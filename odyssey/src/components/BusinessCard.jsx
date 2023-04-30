@@ -6,6 +6,7 @@ export default function BusinessCard(props) {
 
   const [business, setBusiness] = useState('')
 
+
   useEffect(() => {
 
     function loadData() {
