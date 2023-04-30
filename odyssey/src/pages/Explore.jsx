@@ -4,9 +4,15 @@ import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Explore() {
+
+  const location = useLocation();
+  const { authToken } = location.state
+
+  const [authorized, setAuthorized] = useState(authToken)
+
   // set form states
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");

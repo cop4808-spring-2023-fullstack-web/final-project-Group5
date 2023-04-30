@@ -3,6 +3,7 @@ import { Button } from "./Button";
 import "./VideoSection.css";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../config/config'
+import { Link } from "react-router-dom";
 
 const VideoSection = () => {
 
@@ -12,7 +13,7 @@ const VideoSection = () => {
   useEffect(() => {
     auth.onAuthStateChanged((userCred) => {
       setAuthorized(true);
-      window.localStorage.setItems('auth', 'true');
+      window.localStorage.setItem('auth', 'true');
       userCred.getIdToken().then((token) => {
         setToken(token)
       })
@@ -24,7 +25,7 @@ const VideoSection = () => {
     .then((userCred) => {
       if(userCred) {
         setAuthorized(true);
-        window.localStorage.setItems('auth', 'true');
+        window.localStorage.setItem('auth', 'true');
       }
       console.log(userCred);
     })
@@ -43,7 +44,9 @@ const VideoSection = () => {
             buttonStyle="btn--outline"
             buttonSize="btn--large"
           >
-          Explore <i className="fa-solid fa-globe"></i>
+            <Link to='/explore' state={{ authToken: token}}>
+              Explore <i className="fa-solid fa-globe"></i>
+            </Link>
           </Button>
         ) : (
           <Button
