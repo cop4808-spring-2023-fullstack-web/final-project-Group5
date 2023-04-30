@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import "./VideoSection.css";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -6,14 +6,25 @@ import { auth } from '../config/config'
 
 const VideoSection = () => {
 
-  const [authorized, setAuthorized] = useState(false)
+  const [authorized, setAuthorized] = useState(false || window.localStorage.getItem('auth') === 'true')
+  const [token, setToken] = useState('')
+
+  useEffect(() => {
+    auth.onAuthStateChanged((userCred) => {
+      setAuthorized(true);
+      window.localStorage.setItems('auth', 'true');
+      userCred.getIdToken().then((token) => {
+        setToken(token)
+      })
+    })
+  })
 
   const loginGoogle =  async (e) => {
-
     signInWithPopup(auth, new GoogleAuthProvider())
     .then((userCred) => {
       if(userCred) {
         setAuthorized(true);
+        window.localStorage.setItems('auth', 'true');
       }
       console.log(userCred);
     })
