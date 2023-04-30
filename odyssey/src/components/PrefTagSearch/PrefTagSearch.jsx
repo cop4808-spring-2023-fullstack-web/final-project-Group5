@@ -27,15 +27,22 @@ const PrefTagSearch = ({ title, onUpdate }) => {
 
     //example object that holds tag data: 
     const tagsData = [
-        { id: 1, label: 'tag1', value: 'tag1' },
+        { id: 1, label: "tag1", value: "tag1" },
         { id: 2, label: 'tag2', value: 'tag2' },
-        { id: 3, label: 'Restaurants', value: 'Restaurants' },
+        { id: 3, label: 'Restaurants1', value: 'Restaurants1' },
     ];
 
     useEffect(() => {
         //notify parent component when selected tags are updated: 
         onUpdate(selectedTags);
         setTags(tagsData);
+        tags.map(tag => console.log(tag.label));
+        fetchCategories();
+        tags.map(tag => console.log(tag.label));
+        //setTags(tagsData);
+
+
+
         //the [title, selectedTag] is a dependency array for the useEffect hook
         // useEffect hook is called when the dependencies' state changes (title and selectedTags are the dep.) 
     }, [title, selectedTags]);
@@ -48,8 +55,16 @@ const PrefTagSearch = ({ title, onUpdate }) => {
     };
 
     //function to add tags to the card component
+    /*     const addTag = (tag) => {
+            if (!selectedTags.includes(tag)) {
+                setSelectedTags([...selectedTags, tag]);
+            }
+        }; */
+    // Change addTag to check and store the whole tag object instead of just the value
     const addTag = (tag) => {
-        if (!selectedTags.includes(tag)) {
+        // Check if tag object already exists in selectedTags
+        if (!selectedTags.find(t => t.value === tag.value)) {
+            // If not, add the entire tag object to selectedTags
             setSelectedTags([...selectedTags, tag]);
         }
     };
@@ -67,26 +82,47 @@ const PrefTagSearch = ({ title, onUpdate }) => {
     };
 
     const fetchCategories = async() => {
+        try {
+            const endpoint = 'rest';
+            const response = await axios.get(`http://localhost:8000/auto/${endpoint}`, {
+                timeout: 5000
+            });
+            const categories = response.data.terms;
+    
+            // Create a new array with categories prepended to tagsData
+            const newTagsData = [
+                // Map each category (which is now an object) to a new tag object
+                ...categories.map((category, index) => ({
+                    id: `category-${index}`,
+                    label: category.text, // Here we access the 'text' property of the category
+                    value: category.text // And here as well
+                })),
+                ...tagsData
+            ];
+    
+            setTags(newTagsData);
+        } catch(error) {
+            console.error(error);
+        }
+    };
+    
 
-    }
 
     return (
         <Card className='p-4 w-[600px]'>
 
 
-            <Card.Title  className="card-header" style={{ textAlign: 'left' }}>{title} Preferences</Card.Title>
+            <Card.Title className="card-header" style={{ textAlign: 'left' }}>{title} Preferences</Card.Title>
             {searchVisible && (
                 <div className="row-container">
                     <Select
                         options={tags}
-                        onChange={selectedOption => addTag(selectedOption.value)}
+                        onChange={selectedOption => addTag(selectedOption)}
                         isSearchable
                         placeholder="Select Search Filters"
-                        /* allow searchbar to stretch to rem. width  */
-                        /* styles={{ container: (base) => ({ ...base, flexGrow: 1}) }} */
-                        styles={{
-                            container: (base) => ({ ...base, flexGrow: 1, margin: '8px' }),
-                        }}
+                    /* allow searchbar to stretch to rem. width  */
+                    /* styles={{ container: (base) => ({ ...base, flexGrow: 1}) }} */
+
                     />
 
                     <div style={{ backgroundColor: 'transparent' }}>
@@ -97,14 +133,13 @@ const PrefTagSearch = ({ title, onUpdate }) => {
 
             <div className='row-container'>
 
+
                 <div className="selected-tags">
                     {selectedTags.map(tag => (
-
-                        <span key={tag} className="tag">
-                            {tag}
+                        <span key={tag.value} className="tag">
+                            {tag.label}
                             <FontAwesomeIcon icon={faTimes} onClick={() => removeTag(tag)} />
                         </span>
-
                     ))}
                 </div>
 
