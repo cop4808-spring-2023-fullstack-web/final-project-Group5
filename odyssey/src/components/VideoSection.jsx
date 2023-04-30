@@ -13,12 +13,19 @@ const VideoSection = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged((userCred) => {
-      setAuthorized(true);
-      window.localStorage.setItem("auth", "true");
-      userCred.getIdToken().then((token) => {
-        setToken(token);
-        window.localStorage.setItem("token", token);
-      });
+      if (userCred) {
+        setAuthorized(true);
+        window.localStorage.setItem("auth", "true");
+        userCred.getIdToken().then((token) => {
+          setToken(token);
+          window.localStorage.setItem("token", token);
+        });
+      } else {
+        setAuthorized(false);
+        setToken("");
+        window.localStorage.removeItem("auth");
+        window.localStorage.removeItem("token");
+      }
     });
   }, []);
 
