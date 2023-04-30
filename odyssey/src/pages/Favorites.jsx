@@ -1,11 +1,17 @@
 import { BusinessCard } from "../components"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function Favorites(props) {
   //get auth token from state
   const authToken = props.token
   //useState for checking authorization status
-  const [authorized, setAuthorized] = useState(props.token)
+  const [authorized, setAuthorized] = useState(false)
+
+  useEffect(() => {
+    if(authToken) {
+      setAuthorized(true);
+    }
+  }, [authToken, setAuthorized])
 
   return(
     <>

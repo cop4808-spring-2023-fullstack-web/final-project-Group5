@@ -10,7 +10,11 @@ export default function BusinessCard(props) {
   useEffect(() => {
 
     function loadData() {
-      axios.get(`http://localhost:8000/biz/${props.bizID}`)
+      axios.get(`http://localhost:8000/biz/${props.bizID}`,{
+        headers: {
+          Authorization: 'Bearer ' + props.token
+        }
+      })
       .then(res => {
         setBusiness(res.data);
       })
@@ -21,7 +25,7 @@ export default function BusinessCard(props) {
     }
 
     loadData();
-  }, [props.bizID])
+  }, [props.bizID, props.token])
 
   return(
     <>

@@ -67,7 +67,7 @@ function Navbar() {
             </li>
             <li className="nav-item1">
               <Link
-                to="/"
+                to="/profile"
                 className="nav-links-mobile1"
                 onClick={closeMobileMenu}
               >
@@ -77,7 +77,9 @@ function Navbar() {
           </ul>
           {button && (
             <Button buttonStyle="btn--outline">
-              Profile <i className="fa-solid fa-user"></i>
+              <Link to="/profile" className="text-black">
+                Profile <i className="fa-solid fa-user"></i>
+              </Link>
             </Button>
           )}
         </div>

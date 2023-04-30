@@ -3,14 +3,20 @@ import Form from "react-bootstrap/Form";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Explore(props) {
   //get auth token from state
   const authToken = props.token
   //useState for checking authorization status
-  const [authorized, setAuthorized] = useState(props.token)
+  const [authorized, setAuthorized] = useState(false)
+
+  useEffect(() => {
+    if(authToken) {
+      setAuthorized(true);
+    }
+  }, [authToken, setAuthorized])
 
   // set form states
   const [destination, setDestination] = useState("");
@@ -28,7 +34,9 @@ export default function Explore(props) {
   };
 
   return (
-    <div>
+    <>
+    {authorized ? (
+      <div>
       {/* Page Header */}
       <h1 className="text-center m-5 text-3xl">Start Your Trip</h1>
       <div className="flex justify-center m-5">
@@ -75,6 +83,13 @@ export default function Explore(props) {
           </Form>
         </Card>
       </div>
-    </div>
+    </div>  
+    ) : (
+      <div>
+        Please login to start your journey!
+      </div>
+    )}
+    </>
+
   );
 }

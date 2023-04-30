@@ -19,7 +19,7 @@ const VideoSection = () => {
         window.localStorage.setItem('token', token)
       })
     })
-  })
+  }, [])
 
   const loginGoogle =  async (e) => {
     signInWithPopup(auth, new GoogleAuthProvider())

@@ -1,11 +1,17 @@
 import { BusinessCard } from "../components"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 export default function Itinerary(props) {
   //get auth token from state
   const authToken = props.token
   //useState for checking authorization status
-  const [authorized, setAuthorized] = useState(props.token)
+  const [authorized, setAuthorized] = useState(false)
+
+  useEffect(() => {
+    if(authToken) {
+      setAuthorized(true);
+    }
+  }, [authToken, setAuthorized])
 
   return(
     <>
@@ -13,7 +19,7 @@ export default function Itinerary(props) {
       <div>
         <div className="flex flex-col justify-center">
           <p className="m-0 text-center">Hotel Recommendation:</p>
-          <BusinessCard bizID='VXLcx7inE7lsdxLA-8CZIA' />
+          <BusinessCard bizID='VXLcx7inE7lsdxLA-8CZIA' token={authorized}/>
         </div>
         
         <div className="flex flex-col justify-center">
