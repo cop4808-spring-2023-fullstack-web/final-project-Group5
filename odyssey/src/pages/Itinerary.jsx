@@ -15,6 +15,8 @@ export default function Itinerary(props) {
 
   return(
     <>
+    {authorized ? (
+      <div>
       <h1 className='text-center m-5 text-3xl'>Your Current Itinerary</h1>
       <div>
         <div className="flex flex-col justify-center">
@@ -43,6 +45,12 @@ export default function Itinerary(props) {
         </div>
 
       </div>
+      </div>
+    ) : (
+      <div>
+        Please login to see your itinerary!
+      </div> 
+    )}  
     </>
   )
 }

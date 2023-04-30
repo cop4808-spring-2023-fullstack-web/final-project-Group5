@@ -14,6 +14,15 @@ export default function Explore(props) {
 
   return(
     <>
+    {authorized ? (
+      <div>
+        My Trips
+      </div>
+    ) : (
+      <div>
+        Please login to see your trips!
+      </div>
+    )}
     </>
   )
 }
