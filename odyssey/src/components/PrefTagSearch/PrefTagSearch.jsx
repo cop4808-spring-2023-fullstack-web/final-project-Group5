@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Dropdown, Button } from 'react-bootstrap';
+import { Dropdown, Button, Form, Card } from 'react-bootstrap';
 import './PrefTagSearch.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faMinus, faTimes, faPlus, faTags, } from '@fortawesome/free-solid-svg-icons';
-
+//import { BiSearch, BiMinus, BiX, BiPlus, BiTag } from 'react-icons/bi';
 import Select from 'react-select';
 
 
@@ -38,7 +38,7 @@ const PrefTagSearch = ({ title, onUpdate }) => {
         setTags(tagsData);
         //the [title, selectedTag] is a dependency array for the useEffect hook
         // useEffect hook is called when the dependencies' state changes (title and selectedTags are the dep.) 
-      }, [title, selectedTags]);
+    }, [title, selectedTags]);
 
 
     //set search bar to initial state (not visible): 
@@ -66,34 +66,37 @@ const PrefTagSearch = ({ title, onUpdate }) => {
         toggleSearch();
     };
 
+    const fetchCategories = async() => {
+
+    }
+
     return (
-        <PrefTagSearchWrapper>
-        <div className="tag-search card">
+        <Card className='p-4 w-[600px]'>
 
-            <div className="card-header" style={{ textAlign: 'left' }}>{title} Preferences</div>
 
+            <Card.Title  className="card-header" style={{ textAlign: 'left' }}>{title} Preferences</Card.Title>
             {searchVisible && (
                 <div className="row-container">
                     <Select
                         options={tags}
                         onChange={selectedOption => addTag(selectedOption.value)}
                         isSearchable
-                        placeholder="Select a tag"
+                        placeholder="Select Search Filters"
                         /* allow searchbar to stretch to rem. width  */
                         /* styles={{ container: (base) => ({ ...base, flexGrow: 1}) }} */
                         styles={{
                             container: (base) => ({ ...base, flexGrow: 1, margin: '8px' }),
-                          }}
+                        }}
                     />
 
-                    <div style={{backgroundColor: 'transparent'}}>
-                        <Button className='button' onClick={saveTags}>Save Tags</Button>
+                    <div style={{ backgroundColor: 'transparent' }}>
+                        <Button className='button' onClick={saveTags}>Save</Button>
                     </div>
                 </div>
             )}
 
             <div className='row-container'>
-                
+
                 <div className="selected-tags">
                     {selectedTags.map(tag => (
 
@@ -121,18 +124,10 @@ const PrefTagSearch = ({ title, onUpdate }) => {
             </div>
 
 
-        </div>
-        </PrefTagSearchWrapper>
+        </Card>
     )
 
 }
-
-//This adds the padding so that the component doesn't take up the whole page's width
-//also has a max width set 
-const PrefTagSearchWrapper = ({ children }) => (
-    <div className="pref-tag-search-wrapper">{children}</div>
-  );
-  
 
 export default PrefTagSearch;
 

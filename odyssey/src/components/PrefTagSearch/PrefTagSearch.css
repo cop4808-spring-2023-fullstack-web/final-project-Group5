@@ -24,8 +24,12 @@
     flex-direction: row;
     justify-content: left;
     text-align: left;
-    margin: 8px;
+    /* margin: 8px; */
     
+  }
+  .card-header {
+    margin: -20px -20px 20px -20px;
+    border-radius: 5px 5px 0 0;
   }
 
   .row-container {
@@ -49,7 +53,7 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    margin: 5px;
+   /*  margin: 5px; */
     background-color: transparent;
   }
 
@@ -87,39 +91,4 @@
     cursor: pointer;
     background-color: transparent;
   }
-  
-
-/*   .custom-select .react-select__control {
-    background-color: #B2D9F0;
-    border: none;
-    box-shadow: none;
-  }
-  
-  .custom-select .react-select__control--is-focused {
-    background-color: #E5F2F7;
-    border: none;
-    box-shadow: none;
-  }
-  
-  .custom-select .react-select__single-value {
-    color: black;
-  }
-  
-  .custom-select .react-select__input input {
-    color: black;
-  }
-  
-  .custom-select .react-select__menu {
-    background-color: white;
-  }
-  
-  .custom-select .react-select__option {
-    color: black;
-  }
-  
-  .custom-select .react-select__option--is-selected {
-    background-color: #B2D9F0;
-  }
- */
-  
   
