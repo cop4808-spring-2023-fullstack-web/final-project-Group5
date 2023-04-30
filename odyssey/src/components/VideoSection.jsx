@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./Button";
 import "./VideoSection.css";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../config/config";
 
 const VideoSection = () => {
+  const [authorized, setAuthorized] = useState(false);
+
+  const loginGoogle = async (e) => {
+    signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
+      if (userCred) {
+        setAuthorized(true);
+      }
+      console.log(userCred);
+    });
+  };
+
   return (
     <div className="video-container">
       <video src="/videos/video3.mp4" autoPlay loop muted />
