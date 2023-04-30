@@ -1,4 +1,6 @@
-import { Button, Form, Card } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import Card from "react-bootstrap/Card";
 
 export default function Explore() {
   return (
