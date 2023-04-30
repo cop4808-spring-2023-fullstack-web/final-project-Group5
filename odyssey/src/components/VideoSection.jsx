@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import { Button } from "./Button";
 import "./VideoSection.css";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../config/config";
+import { auth } from '../config/config'
 
 const VideoSection = () => {
-  const [authorized, setAuthorized] = useState(false);
 
-  const loginGoogle = async (e) => {
-    signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
-      if (userCred) {
+  const [authorized, setAuthorized] = useState(false)
+
+  const loginGoogle =  async (e) => {
+
+    signInWithPopup(auth, new GoogleAuthProvider())
+    .then((userCred) => {
+      if(userCred) {
         setAuthorized(true);
       }
       console.log(userCred);
-    });
-  };
+    })
+  }
 
   return (
     <div className="video-container">
@@ -29,7 +32,7 @@ const VideoSection = () => {
             buttonStyle="btn--outline"
             buttonSize="btn--large"
           >
-            Explore <i className="fa-solid fa-globe"></i>
+          Explore <i className="fa-solid fa-globe"></i>
           </Button>
         ) : (
           <Button
@@ -38,7 +41,7 @@ const VideoSection = () => {
             buttonSize="btn--large"
             onClick={loginGoogle}
           >
-            Get Started <i className="fa-solid fa-user"></i>
+          Get Started <i className="fa-solid fa-user"></i>
           </Button>
         )}
       </div>
