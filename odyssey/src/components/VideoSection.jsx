@@ -62,7 +62,11 @@ const VideoSection = () => {
               buttonStyle="btn--outline"
               buttonSize="btn--large"
             >
-              <Link to="/explore" state={{ authToken: token }}>
+              <Link
+                to="/explore"
+                state={{ authToken: token }}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 Explore <i className="fa-solid fa-globe"></i>
               </Link>
             </Button>
