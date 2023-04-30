@@ -13,12 +13,19 @@ const VideoSection = () => {
 
   useEffect(() => {
     auth.onAuthStateChanged((userCred) => {
-      setAuthorized(true);
-      window.localStorage.setItem("auth", "true");
-      userCred.getIdToken().then((token) => {
-        setToken(token);
-        window.localStorage.setItem("token", token);
-      });
+      if (userCred) {
+        setAuthorized(true);
+        window.localStorage.setItem("auth", "true");
+        userCred.getIdToken().then((token) => {
+          setToken(token);
+          window.localStorage.setItem("token", token);
+        });
+      } else {
+        setAuthorized(false);
+        setToken("");
+        window.localStorage.removeItem("auth");
+        window.localStorage.removeItem("token");
+      }
     });
   }, []);
 
@@ -55,7 +62,11 @@ const VideoSection = () => {
               buttonStyle="btn--outline"
               buttonSize="btn--large"
             >
-              <Link to="/explore" state={{ authToken: token }}>
+              <Link
+                to="/explore"
+                state={{ authToken: token }}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 Explore <i className="fa-solid fa-globe"></i>
               </Link>
             </Button>
