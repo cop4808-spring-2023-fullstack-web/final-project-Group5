@@ -5,8 +5,9 @@ export default function Favorites(props) {
   //get auth token from state
   const authToken = props.token
   //useState for checking authorization status
-  const [authorized, setAuthorized] = useState(false)
-
+  const [authorized, setAuthorized] = useState(
+    false || window.localStorage.getItem("auth") === "true"
+  );
   useEffect(() => {
     if(authToken) {
       setAuthorized(true);

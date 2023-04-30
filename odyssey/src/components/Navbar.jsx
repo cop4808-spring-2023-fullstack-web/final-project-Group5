@@ -12,6 +12,8 @@ function Navbar() {
 
   const [button, setButton] = useState(true);
 
+  const [token, setToken] = useState('' || window.localStorage.getItem('token'))
+
   const handleButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -22,6 +24,7 @@ function Navbar() {
 
   useEffect(() => {
     handleButton();
+    setToken(window.localStorage.getItem('token'))
   }, []);
 
   window.addEventListener("resize", handleButton);
@@ -30,7 +33,7 @@ function Navbar() {
     <>
       <nav className="navbar1">
         <div className="navbar-container1">
-          <Link to="/" className="navbar-logo1" onClick={closeMobileMenu}>
+          <Link to="/" state={{ authToken: token }}className="navbar-logo1" onClick={closeMobileMenu}>
             Odyssey<i className="fa-solid fa-map-location-dot"></i>
           </Link>
           <div className="menu-icon1" onClick={handleClick}>
@@ -38,18 +41,23 @@ function Navbar() {
           </div>
           <ul className={Click ? "nav-menu1 active" : "nav-menu1"}>
             <li className="nav-item1">
-              <Link to="/explore" className="nav-links1" onClick={closeMobileMenu}>
+              <Link to="/explore" 
+              state={{ authToken: token }}
+              className="nav-links1" onClick={closeMobileMenu}>
                 Explore
               </Link>
             </li>
             <li className="nav-item1">
-              <Link to="/itinerary" className="nav-links1" onClick={closeMobileMenu}>
+              <Link to="/itinerary"
+              state={{ authToken: token }}
+              className="nav-links1" onClick={closeMobileMenu}>
                 Itinerary
               </Link>
             </li>
             <li className="nav-item1">
               <Link
                 to="/trips"
+                state={{ authToken: token }}
                 className="nav-links1"
                 onClick={closeMobileMenu}
               >
@@ -59,6 +67,7 @@ function Navbar() {
             <li className="nav-item1">
               <Link
                 to="/favorites"
+                state={{ authToken: token }}
                 className="nav-links1"
                 onClick={closeMobileMenu}
               >
@@ -68,6 +77,7 @@ function Navbar() {
             <li className="nav-item1">
               <Link
                 to="/profile"
+                state={{ authToken: token }}
                 className="nav-links-mobile1"
                 onClick={closeMobileMenu}
               >
@@ -77,7 +87,9 @@ function Navbar() {
           </ul>
           {button && (
             <Button buttonStyle="btn--outline">
-              <Link to="/profile" className="text-black">
+              <Link to="/profile" 
+              state={{ authToken: token }}
+              className="text-white">
                 Profile <i className="fa-solid fa-user"></i>
               </Link>
             </Button>
