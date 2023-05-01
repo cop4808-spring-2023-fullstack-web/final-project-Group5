@@ -92,15 +92,31 @@ export default function BusinessCard(props) {
           }
           <div className="flex flex-row">
             <p>Hours:</p>
-            <div className="m-1 mx-2">
             {business.hours && business.hours.length > 0 &&
-              Array.from({length: business.hours[0].open.length}, (day) =>
+              <div className="m-1 mx-2">
                 <p className="m-0 text-xs">
                   Mon: {business.hours[0].open[0].start} - {business.hours[0].open[0].end}
                 </p>
-              )
+                <p className="m-0 text-xs">
+                  Tues: {business.hours[0].open[1].start} - {business.hours[0].open[1].end}
+                </p>
+                <p className="m-0 text-xs">
+                  Wed: {business.hours[0].open[2].start} - {business.hours[0].open[2].end}
+                </p>
+                <p className="m-0 text-xs">
+                  Thu: {business.hours[0].open[3].start} - {business.hours[0].open[3].end}
+                </p>
+                <p className="m-0 text-xs">
+                  Frid: {business.hours[0].open[4].start} - {business.hours[0].open[4].end}
+                </p>
+                <p className="m-0 text-xs">
+                  Sat: {business.hours[0].open[5].start} - {business.hours[0].open[5].end}
+                </p>
+                <p className="m-0 text-xs">
+                  Sun: {business.hours[0].open[6].start} - {business.hours[0].open[6].end}
+                </p>
+              </div>
             }  
-            </div>
           </div>
 
           <div className="absolute top-0 right-0 m-2">
@@ -113,12 +129,6 @@ export default function BusinessCard(props) {
             </button>
           </div>
 
-          <div className="absolute bottom-0 right-0 m-2">
-            <button >
-              <i className="m-1 fa-solid fa-arrows-rotate" style={{color: '#3fc6f3',}}></i>
-              New Recommendation
-            </button>
-          </div>
         </Card>
       </div>
     </>
