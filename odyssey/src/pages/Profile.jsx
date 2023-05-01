@@ -2,11 +2,13 @@ import { Button } from "react-bootstrap"
 import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { auth } from "../config/config";
 import { useState, useEffect } from "react";
+
 import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { getAuth } from "firebase/auth";
+import { LoginBtn } from "../components";
 
 export default function Profile() {
   
@@ -45,16 +47,6 @@ export default function Profile() {
       setAuthorized(false);
       window.localStorage.removeItem("auth");
       window.localStorage.removeItem("token");
-    });
-  };
-
-  const loginGoogle = async (e) => {
-    signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
-      if (userCred) {
-        setAuthorized(true);
-        window.localStorage.setItem("auth", "true");
-      }
-      console.log(userCred);
     });
   };
 
@@ -99,6 +91,9 @@ export default function Profile() {
       </>
       
       
+
+      <LoginBtn />
+
     )} 
     </>
   )

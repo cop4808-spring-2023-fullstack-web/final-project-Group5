@@ -4,6 +4,8 @@ import VideoSection from './VideoSection';
 import BusinessCard from './BusinessCard'
 import TripCard from './TripCard';
 import PreferencesCard from './PreferencesCard';
+import LoginBtn from './LoginBtn';
+import PrefTagSearch from './PrefTagSearch/PrefTagSearch';
 
 export {
   Navbar,
@@ -11,5 +13,7 @@ export {
   VideoSection,
   BusinessCard,
   TripCard,
-  PreferencesCard
+  PreferencesCard,
+  LoginBtn,
+  PrefTagSearch
 }
