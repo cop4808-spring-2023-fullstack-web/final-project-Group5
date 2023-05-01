@@ -11,5 +11,5 @@ export {
   Itinerary,
   Trips,
   Favorites,
-  Profile
+  Profile,
 }

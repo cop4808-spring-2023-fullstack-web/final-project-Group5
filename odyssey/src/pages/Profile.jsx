@@ -2,6 +2,7 @@ import { Button } from "react-bootstrap"
 import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { auth } from "../config/config";
 import { useState, useEffect } from "react";
+import { LoginBtn } from "../components";
 
 export default function Profile() {
 
@@ -33,16 +34,6 @@ export default function Profile() {
     });
   };
 
-  const loginGoogle = async (e) => {
-    signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
-      if (userCred) {
-        setAuthorized(true);
-        window.localStorage.setItem("auth", "true");
-      }
-      console.log(userCred);
-    });
-  };
-
   return (
     <>
     {authorized ? (
@@ -50,9 +41,7 @@ export default function Profile() {
         Logout <i className="fa-solid fa-sign-out"></i>
       </Button>
     ) : (
-      <Button className="m-2" size="lg" variant="dark" onClick={loginGoogle}>
-        Log in <i className="fa-solid fa-user"></i>
-      </Button>
+      <LoginBtn />
     )} 
     </>
   )

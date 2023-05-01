@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
+import { LoginBtn } from '../components';
 
 export default function Explore(props) {
   //get auth token from state
@@ -23,6 +24,7 @@ export default function Explore(props) {
     ) : (
       <div>
         Please login to see your trips!
+        <LoginBtn />
       </div>
     )}
     </>

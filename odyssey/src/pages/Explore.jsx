@@ -1,7 +1,7 @@
 import { Button, Form, Card, Container, Row, Col} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PrefTagSearch from '../components/PrefTagSearch/PrefTagSearch';
+import { PrefTagSearch, LoginBtn } from '../components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Explore(props) {
@@ -69,7 +69,7 @@ export default function Explore(props) {
         </div>
 
         <div className='flex justify-center m-5'>
-          <Button className="align-self-center" size='lg' variant="dark" type="submit">
+          <Button className="align-self-center" size='lg' variant="dark" type="submit" onClick={handleSubmit}>
             Embark
           </Button>
         </div>
@@ -80,6 +80,7 @@ export default function Explore(props) {
     ) : (
       <div>
         Please login to start your journey!
+        <LoginBtn /> 
       </div>
     )}
     </>

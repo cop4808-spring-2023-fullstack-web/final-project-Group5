@@ -1,4 +1,4 @@
-import { BusinessCard } from "../components"
+import { BusinessCard, LoginBtn } from "../components"
 import { useState, useEffect } from "react"
 
 export default function Favorites(props) {
@@ -8,6 +8,7 @@ export default function Favorites(props) {
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
+  
   useEffect(() => {
     if(authToken) {
       setAuthorized(true);
@@ -24,6 +25,7 @@ export default function Favorites(props) {
     ) : (
       <div>
         Please login to see your favorites!
+        <LoginBtn />
       </div>
     )}
     </>
