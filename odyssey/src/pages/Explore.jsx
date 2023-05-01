@@ -13,6 +13,7 @@ export default function Explore() {
   }
   const handleSubmit = () => {
     //post request - submit preference data to db
+    console.log(preferenceData)
   }
 
   return (
@@ -43,9 +44,23 @@ export default function Explore() {
         <div className='flex justify-center m-5'>
           <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
         </div>
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Breakfast Restaurant' onUpdate={handleUpdate} />
+        </div>
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Lunch Restaurant' onUpdate={handleUpdate} />
+        </div>
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Activity' onUpdate={handleUpdate} />
+        </div>
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Dinner Restaurant' onUpdate={handleUpdate} />
+        </div>
+        
+        
 
         <div className='flex justify-center m-5'>
-          <Button className="align-self-center" size='lg' variant="dark" type="submit">
+          <Button className="align-self-center" size='lg' variant="dark" type="submit" onClick={handleSubmit}>
             Embark
           </Button>
         </div>
