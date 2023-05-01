@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap"
 import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-import { auth } from "./config/config";
+import { auth } from "../config/config";
 import { useState, useEffect } from "react";
 
 export default function LoginBtn() {
