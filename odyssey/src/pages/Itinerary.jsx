@@ -1,6 +1,7 @@
 import { BusinessCard, LoginBtn } from "../components";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { getAuth } from "firebase/auth";
 import axios from "axios";
 
 export default function Itinerary(props) {
@@ -11,15 +12,19 @@ export default function Itinerary(props) {
     false || window.localStorage.getItem("auth") === "true"
   );
   
+  const [auth, setAuth] = useState(getAuth())
+  const [user, setUser] = useState(auth.currentUser)
+
   // get query parameters
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   
   // get destination, startDate, endDate from query parameters
-  const destination = queryParams.get("destination");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("destination");
   
+  const [destination, setDestination] = useState('' || queryParams.get("destination"))
+
   // Initialize states for business id's of place categories
   const [hotelBizID, setHotelBizID] = useState("");
   const [breakfastBizID, setBreakfastBizID] = useState("");
@@ -31,6 +36,22 @@ export default function Itinerary(props) {
     if(authToken) {
       setAuthorized(true);
     }
+
+    setAuth(getAuth())
+    setUser(auth.currentUser)
+
+    if(destination === ''){
+      axios.get(`http://localhost:8000/user/${user.uid}`)
+      .then(res => {
+        if (res.data.length > 0) {
+          console.log(res.data)
+        }  
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    }
+
     // get Hotel from backend
     axios.get(`http://localhost:8000/search/Hotel/${destination}`)
       .then(response => {

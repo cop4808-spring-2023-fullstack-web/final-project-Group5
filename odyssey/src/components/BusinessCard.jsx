@@ -5,11 +5,11 @@ import { getAuth } from "firebase/auth";
 
 export default function BusinessCard(props) {
 
-  const auth = getAuth();
-
+  const [auth, setAuth] = useState(getAuth())
   const [business, setBusiness] = useState('')
   const [isFavorite, setIsFavorite] = useState(false)
   const [user, setUser] = useState(auth.currentUser)
+
 
   const handleFavorite = () => {
     if(!isFavorite){
@@ -20,6 +20,7 @@ export default function BusinessCard(props) {
   }
 
   useEffect(() => {
+    setAuth(getAuth())
 
     function checkFavorite() {
       axios.get(`http://localhost:8000/isfavorite/${user.uid}`,
@@ -36,11 +37,7 @@ export default function BusinessCard(props) {
     }
 
     function loadData() {
-      axios.get(`http://localhost:8000/biz/${props.bizID}`,{
-        headers: {
-          Authorization: 'Bearer ' + props.token
-        }
-      })
+      axios.get(`http://localhost:8000/biz/${props.bizID}`)
       .then(res => {
         setBusiness(res.data);
       })
@@ -51,6 +48,7 @@ export default function BusinessCard(props) {
     }
 
     loadData();
+
   }, [props.bizID, props.token, user.uid])
 
   return(
@@ -94,27 +92,69 @@ export default function BusinessCard(props) {
             <p>Hours:</p>
             {business.hours && business.hours.length > 0 &&
               <div className="m-1 mx-2">
-                <p className="m-0 text-xs">
-                  Mon: {business.hours[0].open[0].start} - {business.hours[0].open[0].end}
-                </p>
-                <p className="m-0 text-xs">
-                  Tues: {business.hours[0].open[1].start} - {business.hours[0].open[1].end}
-                </p>
-                <p className="m-0 text-xs">
-                  Wed: {business.hours[0].open[2].start} - {business.hours[0].open[2].end}
-                </p>
-                <p className="m-0 text-xs">
-                  Thu: {business.hours[0].open[3].start} - {business.hours[0].open[3].end}
-                </p>
-                <p className="m-0 text-xs">
-                  Frid: {business.hours[0].open[4].start} - {business.hours[0].open[4].end}
-                </p>
-                <p className="m-0 text-xs">
-                  Sat: {business.hours[0].open[5].start} - {business.hours[0].open[5].end}
-                </p>
-                <p className="m-0 text-xs">
-                  Sun: {business.hours[0].open[6].start} - {business.hours[0].open[6].end}
-                </p>
+                {business.hours[0].open[0] ? (
+                  <p className="m-0 text-xs">
+                    Mon: {business.hours[0].open[0].start} - {business.hours[0].open[0].end}
+                  </p>
+                ) : (
+                  <p className="m-0 text-xs">
+                    Mon: closed
+                  </p>
+                )}
+                {business.hours[0].open[1] ? (
+                  <p className="m-0 text-xs">
+                    Tue: {business.hours[0].open[1].start} - {business.hours[0].open[1].end}
+                  </p>
+                ) : (
+                  <p className="m-0 text-xs">
+                    Tue: closed
+                  </p>
+                )}
+                {business.hours[0].open[2] ? (
+                  <p className="m-0 text-xs">
+                    Wed: {business.hours[0].open[2].start} - {business.hours[0].open[2].end}
+                  </p>
+                ) : (
+                  <p className="m-0 text-xs">
+                    Wed: closed
+                  </p>
+                )}
+                {business.hours[0].open[3] ? (
+                  <p className="m-0 text-xs">
+                    Thu: {business.hours[0].open[3].start} - {business.hours[0].open[3].end}
+                  </p>
+                ) : (
+                  <p className="m-0 text-xs">
+                    Thu: closed
+                  </p>
+                )}
+                {business.hours[0].open[4] ? (
+                  <p className="m-0 text-xs">
+                    Fri: {business.hours[0].open[4].start} - {business.hours[0].open[4].end}
+                  </p>
+                ) : (
+                  <p className="m-0 text-xs">
+                    Sun: closed
+                  </p>
+                )}
+                {business.hours[0].open[5] ? (
+                  <p className="m-0 text-xs">
+                    Sat: {business.hours[0].open[5].start} - {business.hours[0].open[5].end}
+                  </p>
+                ) : (
+                  <p className="m-0 text-xs">
+                    Sat: closed
+                  </p>
+                )}
+                {business.hours[0].open[6] ? (
+                  <p className="m-0 text-xs">
+                    Sun: {business.hours[0].open[6].start} - {business.hours[0].open[6].end}
+                  </p>
+                ) : (
+                  <p className="m-0 text-xs">
+                    Sun: closed
+                  </p>
+                )}
               </div>
             }  
           </div>

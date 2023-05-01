@@ -34,8 +34,8 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 //mongo endpoints here
-//get favorites list based on userID
-app.get('/favorites/:userID', async function(req, res) {
+//get user obj based on userID
+app.get('/user/:userID', async function(req, res) {
   var id = req.params.userID;
 
   const cursor = await coll.findOne({ UID: id});
@@ -72,6 +72,17 @@ app.get('/isfavorite/:userID', async function(req, res) {
   }
 })
 
+//get user location
+app.get('/destination/:userID', async function(req, res) {
+  var id = req.params.userID;
+
+  coll.findOne( { UID : id}, {})
+
+
+})
+
+
+//get user 
 
 
 
