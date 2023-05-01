@@ -1,7 +1,8 @@
 import { Navbar } from "./components";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { Home, Explore, Itinerary, Trips, Favorites, Profile } from './pages';
+import { Home, Explore, Itinerary, Trips, Favorites, Profile, } from './pages';
+import UserPreferences from "./pages/userPreferences";
 
 function App() {
 
@@ -18,6 +19,8 @@ function App() {
           <Route path="/trips" element={<Trips token={authToken} />}></Route>
           <Route path="/favorites" element={<Favorites token={authToken} />}></Route>
           <Route path="/profile" element={<Profile token={authToken} />}></Route>
+          <Route path="/preferences" element={<UserPreferences token={authToken} />}></Route>
+
         </Routes>
       </Router>
     </>
