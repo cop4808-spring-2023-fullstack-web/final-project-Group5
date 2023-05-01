@@ -1,7 +1,18 @@
+//load keys from the .env file
+require('dotenv').config()
+
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config()
 const bodyParser = require('body-parser');
+
+const { MongoClient } = require('mongodb');
+const uri = process.env.URI
+const mongoClient = new MongoClient(uri);
+mongoClient.connect();
+const db = mongoClient.db('odyssey');
+const coll = db.collection('users');
+
+
 const yelp = require('yelp-fusion');
 const client = yelp.client(process.env.yelpAPIkey);
 
