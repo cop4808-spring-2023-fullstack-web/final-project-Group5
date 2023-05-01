@@ -4,7 +4,7 @@
 <h3>Description</h3>
 This application is full-stack web application that allows users to plan their future trips by selecting their destination and dates, then providing preferences for points of interest like the hotel, breakfast, lunch, dinner and an activity. Our application will find the most suitable points of interest based on the preferences utilizing the Yelp Fusion API to find these places. The user may also generate new recommendations for their current itinerary based on the pre-existing preferences.
 
-#![odyssey](https://user-images.githubusercontent.com/61981529/235550531-61bec32c-9f1a-4649-b196-5a2cffbfcc10.PNG)
+![odyssey](https://user-images.githubusercontent.com/61981529/235550531-61bec32c-9f1a-4649-b196-5a2cffbfcc10.PNG)
 
 
 <h3>The Team</h3>
