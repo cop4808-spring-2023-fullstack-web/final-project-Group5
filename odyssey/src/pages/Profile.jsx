@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap"
 import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-import { auth } from "../config/config";
+import { auth } from "../components/config/config";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
@@ -15,7 +15,6 @@ export default function Profile() {
     false || window.localStorage.getItem("auth") === "true"
   );
 
-  const auth = getAuth();
   const user = auth.currentUser;
   let displayName = '';
   let email = '';

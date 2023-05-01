@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import "./VideoSection.css";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
-import { auth } from "../config/config";
+import { auth } from "./config/config";
 import { Link } from "react-router-dom";
 
 const VideoSection = () => {
