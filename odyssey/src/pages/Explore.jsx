@@ -49,14 +49,14 @@ export default function Explore(props) {
 
         <div className='flex justify-center m-5'>
           <Card className='p-4 w-[600px]'>
-            <Form onSubmit={handleSubmit}>
+            <Form>
               <Form.Group className="mb-3" id="formDest">
                 <Form.Label>Destination</Form.Label>
-                <Form.Control className='w-1/2 ' type="" placeholder="City or Zipcode" value={destination} onChange={(e) => setDestination(e.target.value)}/>
+                <Form.Control className='w-1/2 ' type="" placeholder="City or Zipcode" />
                 From:
-                <Form.Control id='dateFrom' type='date' value={startDate} onChange={(e) => setStartDate(e.target.value)}/>
+                <Form.Control id='dateFrom' type='date' />
                 To:
-                <Form.Control id='dateTo' type='date' value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
+                <Form.Control id='dateTo' type='date' />
               </Form.Group>
 
             </Form>
