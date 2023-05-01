@@ -91,7 +91,7 @@ export default function Itinerary(props) {
     <>
     {authorized ? (
       <div className="" style={{backgroundImage: "url('../images/rainbow-hills.jpg')", backgroundSize: "cover"}}>
-        <div className="text-center h-screen flex flex-col justify-center items-center ">
+        <div className="text-center flex flex-col justify-center items-center ">
           <h1 className='text-center m-5 text-3xl'>Your Current Itinerary</h1>
           
             <div className="flex flex-col justify-center">
