@@ -66,11 +66,11 @@ export default function Profile() {
           Logout <i className="fa-solid fa-sign-out"></i>
         </Button>
       </div>
-      <div className="d-flex flex-column p-3">
+      <div className="text-center h-screen flex flex-col justify-center items-center ">
           <h3>Current User</h3>
           <p>Username: {displayName}</p>
           <p>Email: {email}</p>
-        </div>
+      </div>
     </div>
     ) : (
       <LoginBtn />
