@@ -2,6 +2,7 @@ import { Button } from "react-bootstrap"
 import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { auth } from "../config/config";
 import { useState, useEffect } from "react";
+import { LoginBtn } from "../components";
 import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
@@ -48,16 +49,6 @@ export default function Profile() {
     });
   };
 
-  const loginGoogle = async (e) => {
-    signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
-      if (userCred) {
-        setAuthorized(true);
-        window.localStorage.setItem("auth", "true");
-      }
-      console.log(userCred);
-    });
-  };
-
   return (
     <>
     {authorized ? (
@@ -89,16 +80,7 @@ export default function Profile() {
         
       </>
     ) : (
-      // NOT AUTHORIZED Content goes here
-      <>
-        <div className="flex flex-column" style={{width:'280px'}}>
-          <Button className="m-2" size="lg" variant="dark" onClick={loginGoogle}>
-            Log in <i className="fa-solid fa-user"></i>
-          </Button>
-        </div>
-      </>
-      
-      
+      <LoginBtn />
     )} 
     </>
   )
