@@ -66,7 +66,7 @@ export default function Profile() {
           Logout <i className="fa-solid fa-sign-out"></i>
         </Button>
       </div>
-      <div className="text-center h-screen flex flex-col justify-center items-center ">
+      <div className="container-fluid flex flex-col justify-center items-center">
           <h3>Current User</h3>
           <p>Username: {displayName}</p>
           <p>Email: {email}</p>
