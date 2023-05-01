@@ -50,7 +50,7 @@ export default function BusinessCard(props) {
 
     loadData();
 
-  }, [props.bizID, props.token, user.uid])
+  }, [auth.currentUser, props.bizID, props.token, user.uid])
 
   return(
     <>
@@ -65,7 +65,7 @@ export default function BusinessCard(props) {
               <i className="m-1 mx-2 text-sm text-red-600">Closed</i>
             }        
           </div>
-          <div className="">
+          <div className="flex flex-row">
             {business && business.rating && business.rating > 0 &&
               Array.from({length: Math.floor(business.rating)}, () =>
                 <i className="fa-solid fa-star" style={{color: "#d64000",}}></i>
@@ -86,9 +86,11 @@ export default function BusinessCard(props) {
               ) 
             }
           </div>
+          <div className="flex flex-row">
           {business &&
             <i className="m-0 text-gray-600">{business.location.city}, {business.location.state}</i>
-          }
+          } 
+          </div>
           <div className="flex flex-row">
             <p>Hours:</p>
             {business.hours && business.hours.length > 0 &&

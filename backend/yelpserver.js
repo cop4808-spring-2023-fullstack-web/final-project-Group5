@@ -72,7 +72,41 @@ app.get('/isfavorite/:userID', async function(req, res) {
   }
 })
 
-//get user 
+//add preferenes
+app.post('/preferences/:userID', async function(req, res) {
+  var id = req.params.userID;
+
+  coll.updateOne(
+    { UID : id },
+    { $set: { 
+        "preferences": {
+          "hotel": [req.body.hotel],
+          "breakfast": [req.body.breakfast],
+          "lunch": [req.body.lunch],
+          "activity": [req.body.activity],
+          "dinner": [req.body.dinner] 
+        } 
+      } 
+    }   
+  )
+  return res.status(201);
+})
+
+//add a user
+app.post('/user/:userID', async function(req, res) {
+  var id = req.params.userID;
+
+  coll.insertOne(
+    {
+      "favorites": [],
+      "trips": [],
+      "preferences": [],
+      "UID": id
+    }
+  )
+
+  return res.status(201).send(coll.findOne({ UID : id }));
+})
 
 
 
