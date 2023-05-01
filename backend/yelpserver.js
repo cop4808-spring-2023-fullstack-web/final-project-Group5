@@ -72,16 +72,6 @@ app.get('/isfavorite/:userID', async function(req, res) {
   }
 })
 
-//get user location
-app.get('/destination/:userID', async function(req, res) {
-  var id = req.params.userID;
-
-  coll.findOne( { UID : id}, {})
-
-
-})
-
-
 //get user 
 
 
