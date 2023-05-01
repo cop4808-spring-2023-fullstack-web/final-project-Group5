@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+require('dotenv').config()
 const bodyParser = require('body-parser');
 const yelp = require('yelp-fusion');
-const client = yelp.client('QZ3xgDfBqmHGO_ION1xXEnRam_jtdNlWQi6VG0uqEYZqWAfQyfdWs-8Lk4n__W6PJowWzlTn7K4l6WGJllYpcH30bTbRTMGMNVMob9suywW_w6CpN3EoDsc3gt8wZHYx');
+const client = yelp.client(process.env.yelpAPIkey);
 
 const app = express();
 const port = process.env.PORT;
