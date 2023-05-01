@@ -1,6 +1,5 @@
 import { Button } from "react-bootstrap"
 import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-import { auth } from "../config/config";
 import { useState, useEffect } from "react";
 
 import { Link } from "react-router-dom";
