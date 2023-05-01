@@ -42,7 +42,7 @@ export default function Explore(props) {
     <>
       {authorized ? (
          <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover"}}>
-            <div className="text-center h-screen flex flex-col justify-center items-center ">
+            <div className="text-center flex flex-col justify-center items-center ">
               <Container>
 
                 <Col lg={6} className="mx-auto">
