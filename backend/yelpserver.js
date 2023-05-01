@@ -42,17 +42,34 @@ app.get('/favorites/:userID', async function(req, res) {
   return res.status(200).send(cursor);
 });
 
+//post favorite to user ID
 app.post('/favorites/:userID', async function(req, res) {
   var id = req.params.userID;
 
   //w7iohA8FIDkeVUXeCqGvQg
-  coll.update( { UID : id },{ $push: { "favorites": req.body.bizID } })
+  coll.updateOne( { UID : id },{ $push: { "favorites": req.body.bizID } })
+
+  return res.status(201);
 })
 
-app.delete('/favorite/:userID', async function(req, res) {
+//delete favorite from users favorites
+app.delete('/favorites/:userID', async function(req, res) {
   var id = req.params.userID;
 
-  coll.update( { UID : id },{ $pull: { "favorites": req.body.bizID } })
+  coll.updateOne( { UID : id },{ $pull: { "favorites": req.body.bizID } })
+
+  return res.status(200);
+})
+
+//check if bizID is contained in users favorites
+app.get('/isfavorite/:userID', async function(req, res) {
+  var id = req.params.userID;
+
+  if(coll.findOne( { UID : id }, {favorites: req.body.bizID})) {
+    return res.status(200).send(true)
+  }else{
+    return res.status(404).send(false)
+  }
 })
 
 

@@ -40,6 +40,7 @@ export default function Favorites(props) {
     <>
     {authorized ? (
       <div className="flex flex-col justify-center">
+        <h1 className="m-3 text-center">Your favorite businesses!</h1>
         {favorites && favorites.length > 0 && 
           favorites.map((biz) => (
             <BusinessCard bizID={biz} />
