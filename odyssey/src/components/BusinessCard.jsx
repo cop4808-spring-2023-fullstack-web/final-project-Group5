@@ -21,6 +21,7 @@ export default function BusinessCard(props) {
 
   useEffect(() => {
     setAuth(getAuth())
+    setUser(auth.currentUser)
 
     function checkFavorite() {
       axios.get(`http://localhost:8000/isfavorite/${user.uid}`,

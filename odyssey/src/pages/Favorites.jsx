@@ -6,12 +6,13 @@ import axios from "axios";
 export default function Favorites(props) {
   //get auth token from state
   const authToken = props.token
-  const auth = getAuth();
+
   //useState for checking authorization status
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
-  
+  const [auth, setAuth] = useState(getAuth())
+
   const [favorites, setFavorites] = useState([])
   const [user, setUser] = useState(auth.currentUser)
 
@@ -19,6 +20,7 @@ export default function Favorites(props) {
     if(authToken) {
       setAuthorized(true);
     }
+    setAuth(getAuth())
     setUser(auth.currentUser)
 
     const loadFavorites = () => {
@@ -35,7 +37,7 @@ export default function Favorites(props) {
     if(authorized){
       loadFavorites();
     }
-  }, [auth.currentUser, authToken, authorized])
+  }, [auth.currentUser, authToken, authorized, user.uid])
 
   return(
     <>
