@@ -79,6 +79,9 @@ const PrefTagSearch = ({ title, onUpdate }) => {
                         onChange={selectedOption => addTag(selectedOption)}
                         isSearchable
                         placeholder="Select Search Filters"
+                        styles={{
+                            container: (base) => ({ ...base, flexGrow: 1, margin: '8px' }),
+                          }}
                     />
                     <div style={{ backgroundColor: 'transparent' }}>
                         <Button className='button' onClick={saveTags}>Save</Button>
