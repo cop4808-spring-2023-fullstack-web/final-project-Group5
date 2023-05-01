@@ -22,7 +22,7 @@ export default function Favorites(props) {
     setUser(auth.currentUser)
 
     const loadFavorites = () => {
-      axios.get(`http://localhost:8000/favorites/${user.uid}`)
+      axios.get(`http://localhost:8000/user/${user.uid}`)
       .then(res => {
         setFavorites(res.data.favorites)
       })
