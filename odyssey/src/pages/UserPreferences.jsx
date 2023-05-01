@@ -71,7 +71,7 @@ export default function UserPreferences() {
           <h3>Content Goes Here</h3>
         </div>
       </div>
-        
+
       </>
     ) : (
       // NOT AUTHORIZED Content goes here
@@ -82,8 +82,8 @@ export default function UserPreferences() {
           </Button>
         </div>
       </>
-      
-      
+
+
     )} 
     </>
   )
