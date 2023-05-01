@@ -1,32 +1,30 @@
 import { useState, useEffect } from "react";
-import { LoginBtn } from '../components';
+import { LoginBtn } from "../components";
 
-export default function Explore(props) {
+export default function Trips(props) {
   //get auth token from state
-  const authToken = props.token
+  const authToken = props.token;
   //useState for checking authorization status
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
-  
+
   useEffect(() => {
-    if(authToken) {
+    if (authToken) {
       setAuthorized(true);
     }
-  }, [authToken, setAuthorized])
+  }, [authToken, setAuthorized]);
 
-  return(
+  return (
     <>
-    {authorized ? (
-      <div>
-        My Trips
-      </div>
-    ) : (
-      <div>
-        Please login to see your trips!
-        <LoginBtn />
-      </div>
-    )}
+      {authorized ? (
+        <div>My Trips</div>
+      ) : (
+        <div>
+          Please login to see your trips!
+          <LoginBtn />
+        </div>
+      )}
     </>
-  )
+  );
 }
