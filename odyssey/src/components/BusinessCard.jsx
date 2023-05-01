@@ -10,6 +10,7 @@ export default function BusinessCard(props) {
   const [isFavorite, setIsFavorite] = useState(false)
   const [user, setUser] = useState(auth.currentUser)
 
+  const [isLoading, setisLoading] = useState(true)
 
   const handleFavorite = () => {
     if(!isFavorite){
@@ -40,6 +41,7 @@ export default function BusinessCard(props) {
     function loadData() {
       axios.get(`http://localhost:8000/biz/${props.bizID}`)
       .then(res => {
+        setisLoading(false);
         setBusiness(res.data);
       })
       .catch(err => {
@@ -55,7 +57,13 @@ export default function BusinessCard(props) {
   return(
     <>
       <div className="flex justify-center mx-5 m-2">
-        <Card className="p-4 w-[600px]">
+          {isLoading ? (
+            <Card className="p-4 w-[600px]">
+              Loading...
+              <i class="fa-regular fa-spinner-third"></i>
+            </Card>
+          ) : (
+          <Card className="p-4 w-[600px]">
           <div className="flex flex-row">
             <h3>{business.name}</h3>
             {business && business.hours[0].is_open_now &&
@@ -171,8 +179,8 @@ export default function BusinessCard(props) {
               )}
             </button>
           </div>
-
-        </Card>
+          </Card>
+          )}
       </div>
     </>
   )
