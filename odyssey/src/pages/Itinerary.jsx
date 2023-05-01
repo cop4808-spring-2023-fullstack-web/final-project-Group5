@@ -1,4 +1,4 @@
-import { BusinessCard } from "../components";
+import { BusinessCard, LoginBtn } from "../components";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -123,6 +123,7 @@ export default function Itinerary(props) {
     ) : (
       <div>
         Please login to see your itinerary!
+        <LoginBtn />
       </div> 
     )}  
     </>
