@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import "./VideoSection.css";
-import { GoogleAuthProvider, signInWithPopup, signOut, getAuth } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "../config/config";
 import { Link } from "react-router-dom";
 
 const VideoSection = () => {
@@ -9,8 +10,6 @@ const VideoSection = () => {
     false || window.localStorage.getItem("auth") === "true"
   );
   const [token, setToken] = useState("");
-
-  const auth = getAuth();
 
   useEffect(() => {
     auth.onAuthStateChanged((userCred) => {
