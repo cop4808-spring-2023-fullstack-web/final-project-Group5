@@ -2,7 +2,7 @@ import { Navbar } from "./components";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Home, Explore, Itinerary, Trips, Favorites, Profile, } from './pages';
-import UserPreferences from "./pages/userPreferences";
+import UserPreferences from "./pages/UserPreferences";
 
 function App() {
 
