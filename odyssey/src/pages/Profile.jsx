@@ -2,12 +2,13 @@ import { Button } from "react-bootstrap"
 import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { auth } from "../config/config";
 import { useState, useEffect } from "react";
-import { LoginBtn } from "../components";
+
 import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import { getAuth } from "firebase/auth";
+import { LoginBtn } from "../components";
 
 export default function Profile() {
   
