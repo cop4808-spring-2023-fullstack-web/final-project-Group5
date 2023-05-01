@@ -4,42 +4,44 @@ import { useNavigate } from "react-router-dom";
 import { PrefTagSearch, LoginBtn } from '../components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
+
 export default function Explore(props) {
-  //get auth token from state
-  const authToken = props.token
-  //useState for checking authorization status
-  const [authorized, setAuthorized] = useState(
-    false || window.localStorage.getItem("auth") === "true"
-  );
-
-  const [preferenceData, setPreferenceData] = useState({})
-  const handleUpdate = (title, tags) => {
-    setPreferenceData(prevData => ({ ...prevData, [title]: tags }));
-  }
-
-  useEffect(() => {
-    if(authToken) {
-      setAuthorized(true);
-    }
-  }, [authToken, setAuthorized])
-
-  // set form states
-  const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  // navigation hook to navigate to itinerary page
-  const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // query string with data from form
-    const query = `destination=${destination}&startDate=${startDate}&endDate=${endDate}`;
-    // navigate to itinerary page passing query string
-    navigate(`/itinerary?${query}`);
-  };
-
-  return (
-    <>
+   //get auth token from state
+   const authToken = props.token
+   //useState for checking authorization status
+   const [authorized, setAuthorized] = useState(
+     false || window.localStorage.getItem("auth") === "true"
+   );
+ 
+   const [preferenceData, setPreferenceData] = useState({})
+   const handleUpdate = (title, tags) => {
+     setPreferenceData(prevData => ({ ...prevData, [title]: tags }));
+   }
+ 
+   useEffect(() => {
+     if(authToken) {
+       setAuthorized(true);
+     }
+   }, [authToken, setAuthorized])
+ 
+   // set form states
+   const [destination, setDestination] = useState("");
+   const [startDate, setStartDate] = useState("");
+   const [endDate, setEndDate] = useState("");
+   // navigation hook to navigate to itinerary page
+   const navigate = useNavigate();
+ 
+   const handleSubmit = (e) => {
+     e.preventDefault();
+     // query string with data from form
+     const query = `destination=${destination}&startDate=${startDate}&endDate=${endDate}`;
+     // navigate to itinerary page passing query string
+     navigate(`/itinerary?${query}`);
+   };
+ 
+  return(
+  <Container>
     {authorized ? (
       <Container>
 
@@ -67,6 +69,19 @@ export default function Explore(props) {
         <div className='flex justify-center m-5'>
           <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
         </div>
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Breakfast Restaurant' onUpdate={handleUpdate} />
+        </div>
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Lunch Restaurant' onUpdate={handleUpdate} />
+        </div>
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Activity' onUpdate={handleUpdate} />
+        </div>
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Dinner Restaurant' onUpdate={handleUpdate} />
+        </div>
+        
 
         <div className='flex justify-center m-5'>
           <Button className="align-self-center" size='lg' variant="dark" type="submit" onClick={handleSubmit}>
@@ -83,7 +98,7 @@ export default function Explore(props) {
         <LoginBtn /> 
       </div>
     )}
-    </>
-
+  
+  </Container>
   );
 }

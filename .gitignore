@@ -13,7 +13,6 @@
 
 #config
 /src/config
-src/components/config/
 
 # misc
 .DS_Store
