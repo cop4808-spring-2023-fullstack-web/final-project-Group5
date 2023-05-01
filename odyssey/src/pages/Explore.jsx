@@ -1,10 +1,8 @@
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Button, Form, Card, Container, Row, Col} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PrefTagSearch from '../components/PrefTagSearch/PrefTagSearch';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Explore(props) {
   //get auth token from state
@@ -13,6 +11,11 @@ export default function Explore(props) {
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
+
+  const [preferenceData, setPreferenceData] = useState({})
+  const handleUpdate = (title, tags) => {
+    setPreferenceData(prevData => ({ ...prevData, [title]: tags }));
+  }
 
   useEffect(() => {
     if(authToken) {
@@ -87,9 +90,42 @@ export default function Explore(props) {
       </div>
     </div>  
     ) : (
-      <div>
-        Please login to start your journey!
-      </div>
+      <Container>
+
+      <Col lg={6} className="mx-auto">
+
+        <h1 className='text-center m-5 text-3xl'>Start Your Trip</h1>
+
+        <div className='flex justify-center m-5'>
+          <Card className='p-4 w-[600px]'>
+            <Form>
+              <Form.Group className="mb-3" id="formDest">
+                <Form.Label>Destination</Form.Label>
+                <Form.Control className='w-1/2 ' type="" placeholder="City or Zipcode" />
+                From:
+                <Form.Control id='dateFrom' type='date' />
+                To:
+                <Form.Control id='dateTo' type='date' />
+              </Form.Group>
+
+            </Form>
+          </Card>
+
+        </div>
+
+        <div className='flex justify-center m-5'>
+          <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
+        </div>
+
+        <div className='flex justify-center m-5'>
+          <Button className="align-self-center" size='lg' variant="dark" type="submit">
+            Embark
+          </Button>
+        </div>
+
+      </Col>
+
+    </Container>
     )}
     </>
 

@@ -8,7 +8,6 @@ export default function Profile() {
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
-  const [token, setToken] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged((userCred) => {
@@ -16,12 +15,10 @@ export default function Profile() {
         setAuthorized(true);
         window.localStorage.setItem("auth", "true");
         userCred.getIdToken().then((token) => {
-          setToken(token);
           window.localStorage.setItem("token", token);
         });
       } else {
         setAuthorized(false);
-        setToken("");
         window.localStorage.removeItem("auth");
         window.localStorage.removeItem("token");
       }
@@ -31,7 +28,6 @@ export default function Profile() {
   const logout = async () => {
     signOut(auth).then(() => {
       setAuthorized(false);
-      setToken("");
       window.localStorage.removeItem("auth");
       window.localStorage.removeItem("token");
     });
