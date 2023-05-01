@@ -1,9 +1,10 @@
 import { Button } from "react-bootstrap"
-import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-import { auth } from "../config/config";
+import { signOut, signInWithPopup, GoogleAuthProvider, getAuth } from "firebase/auth"
+
 import { useState, useEffect } from "react";
 
 export default function LoginBtn() {
+  const auth = getAuth();
 
   const loginGoogle = async (e) => {
     signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
