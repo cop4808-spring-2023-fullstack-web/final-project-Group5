@@ -19,8 +19,8 @@ export default function Explore(props) {
     <>
     {authorized ? (
       <div className="" style={{backgroundImage: "url('../images/lake.jpg')", backgroundSize: "cover"}}>
-        <div className="text-center h-screen flex flex-col justify-center items-center ">
-          My Trips
+        <div className="text-center h-screen flex flex-col justify-start items-center">
+          <h1 className="m-5">My Trips</h1>
 
         </div>
       </div>
