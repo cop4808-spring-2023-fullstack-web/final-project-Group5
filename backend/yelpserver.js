@@ -34,16 +34,26 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 //mongo endpoints here
+//get favorites list based on userID
 app.get('/favorites/:userID', async function(req, res) {
   var id = req.params.userID;
 
-  console.log(id);
-
   const cursor = await coll.findOne({ UID: id});
-  console.log(cursor.favorites);
   return res.status(200).send(cursor);
 });
 
+app.post('/favorites/:userID', async function(req, res) {
+  var id = req.params.userID;
+
+  //w7iohA8FIDkeVUXeCqGvQg
+  coll.update( { UID : id },{ $push: { "favorites": req.body.bizID } })
+})
+
+app.delete('/favorite/:userID', async function(req, res) {
+  var id = req.params.userID;
+
+  coll.update( { UID : id },{ $pull: { "favorites": req.body.bizID } })
+})
 
 
 
