@@ -12,7 +12,6 @@ mongoClient.connect();
 const db = mongoClient.db('odyssey');
 const coll = db.collection('users');
 
-
 const yelp = require('yelp-fusion');
 const client = yelp.client(process.env.yelpAPIkey);
 
@@ -33,6 +32,22 @@ var corsOptions = {
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
+
+//mongo endpoints here
+app.get('/favorites/:userID', async function(req, res) {
+  var id = req.params.userID;
+
+  console.log(id);
+
+  const cursor = await coll.findOne({ UID: id});
+  console.log(cursor.favorites);
+  return res.status(200).send(cursor);
+});
+
+
+
+
+
 
 'use strict';
 
