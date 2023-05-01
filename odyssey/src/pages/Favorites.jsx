@@ -15,7 +15,6 @@ export default function Favorites(props) {
   const [favorites, setFavorites] = useState([])
   const [user, setUser] = useState(auth.currentUser)
 
-
   useEffect(() => {
     if(authToken) {
       setAuthorized(true);
@@ -33,8 +32,10 @@ export default function Favorites(props) {
       .then(() => {})
     }
 
-    loadFavorites();
-  }, [auth.currentUser, authToken, user.uid])
+    if(authorized){
+      loadFavorites();
+    }
+  }, [auth.currentUser, authToken, authorized])
 
   return(
     <>

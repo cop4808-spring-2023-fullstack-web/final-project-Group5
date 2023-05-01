@@ -94,27 +94,52 @@ export default function Itinerary(props) {
       <h1 className='text-center m-5 text-3xl'>Your Current Itinerary</h1>
       <div>
         <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Hotel Recommendation:</p>
+          <p className="m-0 text-center">
+            Hotel Recommendation:
+            <button className="">
+              <i className="m-1 fa-solid fa-arrows-rotate" style={{color: '#3fc6f3',}}></i>
+            </button>
+          </p>
           <BusinessCard bizID={hotelBizID} token={authorized}/>
         </div>
-        
+
         <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Breakfast Recommendation:</p>
+          <p className="m-0 text-center">
+            Breakfast Recommendation:
+            <button className="">
+              <i className="m-1 fa-solid fa-arrows-rotate" style={{color: '#3fc6f3',}}></i>
+            </button>  
+          </p>
           <BusinessCard bizID={breakfastBizID} token={authorized}/>
         </div>
 
         <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Lunch Recommendation:</p>
+          <p className="m-0 text-center">
+            Lunch Recommendation:
+            <button className="">
+              <i className="m-1 fa-solid fa-arrows-rotate" style={{color: '#3fc6f3',}}></i>
+            </button>  
+          </p>
           <BusinessCard bizID={lunchBizID} token={authorized}/>
         </div>
 
         <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Activity Recommendation:</p>
+          <p className="m-0 text-center">
+            Activity Recommendation:
+            <button className="">
+              <i className="m-1 fa-solid fa-arrows-rotate" style={{color: '#3fc6f3',}}></i>
+            </button>  
+          </p>
           <BusinessCard bizID={activityBizID} token={authorized}/>
         </div>
 
         <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Dinner Recommendation:</p>
+          <p className="m-0 text-center">
+            Dinner Recommendation:
+            <button className="">
+              <i className="m-1 fa-solid fa-arrows-rotate" style={{color: '#3fc6f3',}}></i>
+            </button>  
+          </p>
           <BusinessCard bizID={dinnerBizID} token={authorized}/>
         </div>
 
