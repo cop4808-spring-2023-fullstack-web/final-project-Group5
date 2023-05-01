@@ -6,24 +6,25 @@ import axios from "axios";
 export default function Favorites(props) {
   //get auth token from state
   const authToken = props.token
-  const auth = getAuth();
+
   //useState for checking authorization status
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
-  
+  const [auth, setAuth] = useState(getAuth())
+
   const [favorites, setFavorites] = useState([])
   const [user, setUser] = useState(auth.currentUser)
-
 
   useEffect(() => {
     if(authToken) {
       setAuthorized(true);
     }
+    setAuth(getAuth())
     setUser(auth.currentUser)
 
     const loadFavorites = () => {
-      axios.get(`http://localhost:8000/favorites/${user.uid}`)
+      axios.get(`http://localhost:8000/user/${user.uid}`)
       .then(res => {
         setFavorites(res.data.favorites)
       })
@@ -33,13 +34,16 @@ export default function Favorites(props) {
       .then(() => {})
     }
 
-    loadFavorites();
-  }, [auth.currentUser, authToken, user.uid])
+    if(authorized){
+      loadFavorites();
+    }
+  }, [auth.currentUser, authToken, authorized])
 
   return(
     <>
     {authorized ? (
       <div className="flex flex-col justify-center">
+        <h1 className="m-3 text-center">Your favorite businesses!</h1>
         {favorites && favorites.length > 0 && 
           favorites.map((biz) => (
             <BusinessCard bizID={biz} />

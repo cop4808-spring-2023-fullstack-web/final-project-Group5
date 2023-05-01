@@ -30,8 +30,7 @@ This application is full-stack web application that allows users to plan their f
 #
 
 <h3>The app is hosted and and can be accessed here</h3>
-#to be hosted and added here
-<li><a href=''>odyssey.com</a>
+<li><a href='https://odyssey-travel.netlify.app'>https://odyssey-travel.netlify.app</a>
 
 #
 
