@@ -41,7 +41,7 @@ export default function Explore(props) {
   return (
     <>
       {authorized ? (
-         <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover"}}>
+         <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover", backgroundPosition: "center"}}>
             <div className="text-center h-screen flex flex-col justify-center items-center ">
               <Container>
 
@@ -85,7 +85,7 @@ export default function Explore(props) {
         
       ) : (
         // 
-        <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover"}}>
+        <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover", backgroundPosition: "center"}}>
           <div className="text-center h-screen flex flex-col justify-center items-center ">
             <h1 className="text-3xl font-bold mb-5">Please Login to start your journey</h1>
             <div className=" p-5 ">
