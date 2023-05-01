@@ -40,49 +40,54 @@ export default function Explore(props) {
 
   return (
     <>
-    {authorized ? (
-      <Container>
+      {authorized ? (
+        <Container>
 
-      <Col lg={6} className="mx-auto">
+        <Col lg={6} className="mx-auto">
 
-        <h1 className='text-center m-5 text-3xl'>Start Your Trip</h1>
+          <h1 className='text-center m-5 text-3xl'>Start Your Trip</h1>
 
-        <div className='flex justify-center m-5'>
-          <Card className='p-4 w-[600px]'>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" id="formDest">
-                <Form.Label>Destination</Form.Label>
-                <Form.Control className='w-1/2 ' type="" placeholder="City or Zipcode" value={destination} onChange={(e) => setDestination(e.target.value)}/>
-                From:
-                <Form.Control id='dateFrom' type='date' value={startDate} onChange={(e) => setStartDate(e.target.value)}/>
-                To:
-                <Form.Control id='dateTo' type='date' value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
-              </Form.Group>
+          <div className='flex justify-center m-5'>
+            <Card className='p-4 w-[600px]'>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3" id="formDest">
+                  <Form.Label>Destination</Form.Label>
+                  <Form.Control className='w-1/2 ' type="" placeholder="City or Zipcode" value={destination} onChange={(e) => setDestination(e.target.value)}/>
+                  From:
+                  <Form.Control id='dateFrom' type='date' value={startDate} onChange={(e) => setStartDate(e.target.value)}/>
+                  To:
+                  <Form.Control id='dateTo' type='date' value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
+                </Form.Group>
 
-            </Form>
-          </Card>
+              </Form>
+            </Card>
 
+          </div>
+
+          <div className='flex justify-center m-5'>
+            <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
+          </div>
+
+          <div className='flex justify-center m-5'>
+            <Button className="align-self-center" size='lg' variant="dark" type="submit" onClick={handleSubmit}>
+              Embark
+            </Button>
+          </div>
+
+        </Col>
+
+      </Container> 
+      ) : (
+        // 
+        <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover"}}>
+          <div className="text-center h-screen flex flex-col justify-center items-center ">
+            <h1 className="text-3xl font-bold mb-5">Please Login to start your journey</h1>
+            <div className=" p-5 ">
+              <LoginBtn />
+            </div>
+          </div>
         </div>
-
-        <div className='flex justify-center m-5'>
-          <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
-        </div>
-
-        <div className='flex justify-center m-5'>
-          <Button className="align-self-center" size='lg' variant="dark" type="submit" onClick={handleSubmit}>
-            Embark
-          </Button>
-        </div>
-
-      </Col>
-
-    </Container> 
-    ) : (
-      <div>
-        Please login to start your journey!
-        <LoginBtn /> 
-      </div>
-    )}
+      )}
     </>
 
   );

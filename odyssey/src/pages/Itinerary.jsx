@@ -121,10 +121,14 @@ export default function Itinerary(props) {
       </div>
       </div>
     ) : (
-      <div>
-        Please login to see your itinerary!
-        <LoginBtn />
-      </div> 
+      <div className="" style={{backgroundImage: "url('../images/rainbow-hills.jpg')", backgroundSize: "cover"}}>
+          <div className="text-center h-screen flex flex-col justify-center items-center ">
+            <h1 className="text-3xl font-bold mb-5">Please Login to start your journey</h1>
+            <div className=" p-5 ">
+              <LoginBtn />
+            </div>
+          </div>
+        </div>
     )}  
     </>
   )

@@ -22,10 +22,14 @@ export default function Explore(props) {
         My Trips
       </div>
     ) : (
-      <div>
-        Please login to see your trips!
-        <LoginBtn />
-      </div>
+      <div className="" style={{backgroundImage: "url('../images/lake.jpg')", backgroundSize: "cover"}}>
+          <div className="text-center h-screen flex flex-col justify-center items-center ">
+            <h1 className="text-3xl font-bold mb-5">Please Login to start your journey</h1>
+            <div className=" p-5 ">
+              <LoginBtn />
+            </div>
+          </div>
+        </div>
     )}
     </>
   )
