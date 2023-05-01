@@ -1,23 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./Button";
 import "./VideoSection.css";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from '../config/config'
+import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
+import { auth } from "../config/config";
+import { Link } from "react-router-dom";
 
 const VideoSection = () => {
+  const [authorized, setAuthorized] = useState(
+    false || window.localStorage.getItem("auth") === "true"
+  );
+  const [token, setToken] = useState("");
 
-  const [authorized, setAuthorized] = useState(false)
-
-  const loginGoogle =  async (e) => {
-
-    signInWithPopup(auth, new GoogleAuthProvider())
-    .then((userCred) => {
-      if(userCred) {
+  useEffect(() => {
+    auth.onAuthStateChanged((userCred) => {
+      if (userCred) {
         setAuthorized(true);
+        window.localStorage.setItem("auth", "true");
+        userCred.getIdToken().then((token) => {
+          setToken(token);
+          window.localStorage.setItem("token", token);
+        });
+      } else {
+        setAuthorized(false);
+        setToken("");
+        window.localStorage.removeItem("auth");
+        window.localStorage.removeItem("token");
+      }
+    });
+  }, []);
+
+  const loginGoogle = async (e) => {
+    signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
+      if (userCred) {
+        setAuthorized(true);
+        window.localStorage.setItem("auth", "true");
       }
       console.log(userCred);
-    })
-  }
+    });
+  };
+
+  const logout = async () => {
+    signOut(auth).then(() => {
+      setAuthorized(false);
+      setToken("");
+      window.localStorage.removeItem("auth");
+      window.localStorage.removeItem("token");
+    });
+  };
 
   return (
     <div className="video-container">
@@ -27,13 +56,29 @@ const VideoSection = () => {
       <p>with our trip planner</p>
       <div className="hero-btns">
         {authorized ? (
-          <Button
-            className="btns"
-            buttonStyle="btn--outline"
-            buttonSize="btn--large"
-          >
-          Explore <i className="fa-solid fa-globe"></i>
-          </Button>
+          <>
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+            >
+              <Link
+                to="/explore"
+                state={{ authToken: token }}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                Explore <i className="fa-solid fa-globe"></i>
+              </Link>
+            </Button>
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+              onClick={logout}
+            >
+              Logout <i className="fa-solid fa-sign-out"></i>
+            </Button>
+          </>
         ) : (
           <Button
             className="btns"
@@ -41,7 +86,7 @@ const VideoSection = () => {
             buttonSize="btn--large"
             onClick={loginGoogle}
           >
-          Get Started <i className="fa-solid fa-user"></i>
+            Get Started <i className="fa-solid fa-user"></i>
           </Button>
         )}
       </div>
