@@ -37,7 +37,7 @@ export default function Favorites(props) {
     if(authorized){
       loadFavorites();
     }
-  }, [auth.currentUser, authToken, authorized, user.uid])
+  }, [auth.currentUser, authToken, authorized])
 
   return(
     <>
