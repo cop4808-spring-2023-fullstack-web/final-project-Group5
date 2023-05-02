@@ -91,8 +91,8 @@ export default function Itinerary(props) {
     <>
     {authorized ? (
       <div className="" >
-      <div className="text-center h-screen row justify-center items-center " >
-        <h1 className='text-center  m-5 text-3xl h1'>Your Current Itinerary</h1>
+      <div className="text-center row justify-center items-center " >
+        <h1 className='text-center m-5 text-3xl h1'>Your Current Itinerary</h1>
     
         <div className="row justify-center">
           <div className="col">
