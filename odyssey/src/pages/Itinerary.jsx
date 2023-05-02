@@ -90,41 +90,47 @@ export default function Itinerary(props) {
   return(
     <>
     {authorized ? (
-      <div>
-      <h1 className='text-center m-5 text-3xl'>Your Current Itinerary</h1>
-      <div>
-        <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Hotel Recommendation:</p>
-          <BusinessCard bizID={hotelBizID} token={authorized}/>
-        </div>
-        
-        <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Breakfast Recommendation:</p>
-          <BusinessCard bizID={breakfastBizID} token={authorized}/>
-        </div>
+      <div className="" style={{backgroundImage: "url('../images/rainbow-hills.jpg')", backgroundSize: "cover"}}>
+        <div className="text-center flex flex-col justify-center items-center ">
+          <h1 className='text-center m-5 text-3xl'>Your Current Itinerary</h1>
+          
+            <div className="flex flex-col justify-center">
+              <p className="m-0 text-center">Hotel Recommendation:</p>
+              <BusinessCard bizID={hotelBizID} token={authorized}/>
+            </div>
 
-        <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Lunch Recommendation:</p>
-          <BusinessCard bizID={lunchBizID} token={authorized}/>
-        </div>
+            <div className="flex flex-col justify-center">
+              <p className="m-0 text-center">Breakfast Recommendation:</p>
+              <BusinessCard bizID={breakfastBizID} token={authorized}/>
+            </div>
 
-        <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Activity Recommendation:</p>
-          <BusinessCard bizID={activityBizID} token={authorized}/>
-        </div>
+            <div className="flex flex-col justify-center">
+              <p className="m-0 text-center">Lunch Recommendation:</p>
+              <BusinessCard bizID={lunchBizID} token={authorized}/>
+            </div>
 
-        <div className="flex flex-col justify-center">
-          <p className="m-0 text-center">Dinner Recommendation:</p>
-          <BusinessCard bizID={dinnerBizID} token={authorized}/>
-        </div>
+            <div className="flex flex-col justify-center">
+              <p className="m-0 text-center">Activity Recommendation:</p>
+              <BusinessCard bizID={activityBizID} token={authorized}/>
+            </div>
 
-      </div>
+            <div className="flex flex-col justify-center">
+              <p className="m-0 text-center">Dinner Recommendation:</p>
+              <BusinessCard bizID={dinnerBizID} token={authorized}/>
+            </div>
+
+          
+        </div>
       </div>
     ) : (
-      <div>
-        Please login to see your itinerary!
-        <LoginBtn />
-      </div> 
+      <div className="" style={{backgroundImage: "url('../images/rainbow-hills.jpg')", backgroundSize: "cover"}}>
+          <div className="text-center h-screen flex flex-col justify-center items-center ">
+            <h1 className="text-3xl font-bold mb-5">Please Login to start your journey</h1>
+            <div className=" p-5 ">
+              <LoginBtn />
+            </div>
+          </div>
+        </div>
     )}  
     </>
   )

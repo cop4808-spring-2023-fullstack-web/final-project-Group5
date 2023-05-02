@@ -4,14 +4,19 @@ import "./VideoSection.css";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../config/config";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const VideoSection = () => {
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
   const [token, setToken] = useState("");
+  const [user, setUser] = useState(auth.currentUser)
+  window.localStorage.setItem("user", auth.currentUser);
 
   useEffect(() => {
+    setUser(auth.currentUser);
+
     auth.onAuthStateChanged((userCred) => {
       if (userCred) {
         setAuthorized(true);
@@ -35,7 +40,11 @@ const VideoSection = () => {
         setAuthorized(true);
         window.localStorage.setItem("auth", "true");
       }
-      console.log(userCred);
+      axios.post(`http://localhost:8000/user/${window.localStorage.get("user")}`)
+      .then(res => {
+        setUser(window.localStorage.get("user"))
+      })
+      .then(() => {})
     });
   };
 
