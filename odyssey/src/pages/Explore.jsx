@@ -16,14 +16,6 @@ export default function Explore(props) {
   const [preferenceData, setPreferenceData] = useState({})
   const handleUpdate = (title, tags) => {
     setPreferenceData(prevData => ({ ...prevData, [title]: tags }));
-    setTagErrors((prevErrors) => {
-      if (prevErrors[title].length > 0 && tags.length === 0) {
-        return { ...prevErrors, [title]: "Please select at least one tag." };
-      } else if (tags.length > 0) {
-        return { ...prevErrors, [title]: "" };
-      }
-      return prevErrors;
-    });
   }
 
   useEffect(() => {
@@ -37,13 +29,7 @@ export default function Explore(props) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [formErrors, setFormErrors] = useState({});
-  const [tagErrors, setTagErrors] = useState({
-    'Hotel': "",
-    'Breakfast Restaurant': "",
-    'Lunch Restaurant': "",
-    'Activity': "",
-    'Dinner Restaurant': ""
-  });
+
   // navigation hook to navigate to itinerary page
   const navigate = useNavigate();
 
@@ -61,19 +47,9 @@ export default function Explore(props) {
     if (startDate && endDate && startDate > endDate)
       errors.date = "End date should be after start date.";
 
-    // tag selection validation
-    let updatedTagErrors = {};
-    Object.entries(preferenceData).forEach(([title, tags]) => {
-      if (tags.length === 0) {
-        updatedTagErrors[title] = "Please select at least one tag.";
-      } else {
-        updatedTagErrors[title] = "";
-      }
-    });
-    setTagErrors(updatedTagErrors);
-
+  
     // if there are any errors in the form or tag selection, stop form submission and set errors
-    if (Object.keys(errors).length > 0 || Object.values(updatedTagErrors).some(error => error !== "")) {
+    if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
     }
@@ -132,25 +108,25 @@ export default function Explore(props) {
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
                 </div>
-                {tagErrors['Hotel'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Hotel']}</div>}
+               
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Breakfast Restaurant' onUpdate={handleUpdate} />
                 </div>
-                {tagErrors['Breakfast Restaurant'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Breakfast Restaurant']}</div>}
+               
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Lunch Restaurant' onUpdate={handleUpdate} />
                 </div>
-                {tagErrors['Lunch Restaurant'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Lunch Restaurant']}</div>}
+               
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Activity' onUpdate={handleUpdate} />
 
                 </div>
-                {tagErrors['Activity'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Activity']}</div>}
+                
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Dinner Restaurant' onUpdate={handleUpdate} />
 
                 </div>
-                {tagErrors['Dinner Restaurant'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Dinner Restaurant']}</div>}
+                
 
 
                 <div className='flex justify-center m-5'>
