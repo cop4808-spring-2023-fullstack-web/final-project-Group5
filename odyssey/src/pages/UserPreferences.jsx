@@ -3,7 +3,7 @@ import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Nav from "react-bootstrap/Nav";
-import { auth } from "../components/config/config";
+import { auth } from "../config/config";
 
 export default function UserPreferences() {
 
