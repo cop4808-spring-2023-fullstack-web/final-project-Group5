@@ -1,4 +1,4 @@
-import { Button, Form, Card, Container, Row, Col} from "react-bootstrap";
+import { Button, Form, Card, Container, Row, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PrefTagSearch, LoginBtn } from '../components';
@@ -12,13 +12,22 @@ export default function Explore(props) {
     false || window.localStorage.getItem("auth") === "true"
   );
 
+  //State and callback functions for the PrefTagSearch component
   const [preferenceData, setPreferenceData] = useState({})
   const handleUpdate = (title, tags) => {
     setPreferenceData(prevData => ({ ...prevData, [title]: tags }));
+    setTagErrors((prevErrors) => {
+      if (prevErrors[title].length > 0 && tags.length === 0) {
+        return { ...prevErrors, [title]: "Please select at least one tag." };
+      } else if (tags.length > 0) {
+        return { ...prevErrors, [title]: "" };
+      }
+      return prevErrors;
+    });
   }
 
   useEffect(() => {
-    if(authToken) {
+    if (authToken) {
       setAuthorized(true);
     }
   }, [authToken, setAuthorized])
@@ -27,38 +36,92 @@ export default function Explore(props) {
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [formErrors, setFormErrors] = useState({});
+  const [tagErrors, setTagErrors] = useState({
+    'Hotel': "",
+    'Breakfast Restaurant': "",
+    'Lunch Restaurant': "",
+    'Activity': "",
+    'Dinner Restaurant': ""
+  });
   // navigation hook to navigate to itinerary page
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // reset form errors in UI
+    setFormErrors({});
+
+    // form validation
+    let errors = {};
+    if (!destination) errors.destination = "Destination is required.";
+    if (!startDate) errors.startDate = "Start date is required.";
+    if (!endDate) errors.endDate = "End date is required.";
+    if (startDate && endDate && startDate > endDate)
+      errors.date = "End date should be after start date.";
+
+    // tag selection validation
+    let updatedTagErrors = {};
+    Object.entries(preferenceData).forEach(([title, tags]) => {
+      if (tags.length === 0) {
+        updatedTagErrors[title] = "Please select at least one tag.";
+      } else {
+        updatedTagErrors[title] = "";
+      }
+    });
+    setTagErrors(updatedTagErrors);
+
+    // if there are any errors in the form or tag selection, stop form submission and set errors
+    if (Object.keys(errors).length > 0 || Object.values(updatedTagErrors).some(error => error !== "")) {
+      setFormErrors(errors);
+      return;
+    }
+
     // query string with data from form
     const query = `destination=${destination}&startDate=${startDate}&endDate=${endDate}`;
     // navigate to itinerary page passing query string
     navigate(`/itinerary?${query}`);
+
   };
+
 
   return (
     <>
       {authorized ? (
-         <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover"}}>
-            <div className="text-center flex flex-col justify-center items-center ">
-              <Container>
+        <div className="" style={{ backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover" }}>
+          <div className="text-center flex flex-col justify-center items-center ">
+            <Container>
 
-                <Col lg={6} className="mx-auto">
+              <Col lg={6} className="mx-auto">
 
-                  <h1 className='text-center m-5 text-3xl'>Start Your Trip</h1>
+                <h1 className='text-center m-5 text-3xl'>Start Your Trip</h1>
 
-                  <div className='flex justify-center m-5'>
+                <div className='flex justify-center m-5'>
                   <Card className='p-4 w-[600px]' style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}>
                     <Form onSubmit={handleSubmit}>
                       <Form.Group className="mb-3" id="formDest">
                         <Form.Label>Destination</Form.Label>
-                        <Form.Control className='w-1/2 ' style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }} type="" placeholder="City or Zipcode" value={destination} onChange={(e) => setDestination(e.target.value)}/>
+                        <Form.Control
+                          className='w-1/2'
+                          style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }}
+                          type=""
+                          placeholder="City or Zipcode"
+                          value={destination}
+                          onChange={(e) => setDestination(e.target.value)}
+                        />
+                        {formErrors.destination && <div className="error" style={{ color: "#ff0033" }}>{formErrors.destination}</div>}
+
+
                         From:
-                        <Form.Control id='dateFrom' style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }} type='date' value={startDate} onChange={(e) => setStartDate(e.target.value)}/>
-                        To:
-                        <Form.Control id='dateTo' style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }} type='date' value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
+                        <Form.Control id='dateFrom' style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }} type='date' value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+                        {formErrors.startDate && <div className="error" style={{ color: "#ff0033" }}>{formErrors.startDate}</div>}
+
+                        <Form.Label>To:</Form.Label>
+                        <Form.Control id='dateTo' style={{ backgroundColor: "rgba(255, 255, 255, 0.8)" }} type='date' value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+                        {formErrors.endDate && <div className="error" style={{ color: "#ff0033" }}>{formErrors.endDate}</div>}
+                        {formErrors.date && <div className="error" style={{ color: "#ff0033" }}>{formErrors.date}</div>}
+
                       </Form.Group>
 
                     </Form>
@@ -66,39 +129,46 @@ export default function Explore(props) {
 
                 </div>
 
-                  <div className='flex justify-center m-5'>
-                    <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
-                  </div>
-                  <div className='flex justify-center m-5'>
-                    <PrefTagSearch title='Breakfast Restaurant' onUpdate={handleUpdate} />
-                  </div>
-                  <div className='flex justify-center m-5'>
-                    <PrefTagSearch title='Lunch Restaurant' onUpdate={handleUpdate} />
-                  </div>
-                  <div className='flex justify-center m-5'>
-                    <PrefTagSearch title='Activity' onUpdate={handleUpdate} />
-                  </div>
-                  <div className='flex justify-center m-5'>
-                    <PrefTagSearch title='Dinner Restaurant' onUpdate={handleUpdate} />
-                  </div>
-            
+                <div className='flex justify-center m-5'>
+                  <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
+                </div>
+                {tagErrors['Hotel'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Hotel']}</div>}
+                <div className='flex justify-center m-5'>
+                  <PrefTagSearch title='Breakfast Restaurant' onUpdate={handleUpdate} />
+                </div>
+                {tagErrors['Breakfast Restaurant'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Breakfast Restaurant']}</div>}
+                <div className='flex justify-center m-5'>
+                  <PrefTagSearch title='Lunch Restaurant' onUpdate={handleUpdate} />
+                </div>
+                {tagErrors['Lunch Restaurant'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Lunch Restaurant']}</div>}
+                <div className='flex justify-center m-5'>
+                  <PrefTagSearch title='Activity' onUpdate={handleUpdate} />
 
-                  <div className='flex justify-center m-5'>
-                    <Button className="align-self-center" size='lg' variant="dark" type="submit" onClick={handleSubmit}>
-                      Embark
-                    </Button>
-                  </div>
+                </div>
+                {tagErrors['Activity'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Activity']}</div>}
+                <div className='flex justify-center m-5'>
+                  <PrefTagSearch title='Dinner Restaurant' onUpdate={handleUpdate} />
 
-                </Col>
+                </div>
+                {tagErrors['Dinner Restaurant'] && <div className="error" style={{ color: "#ff0033" }}>{tagErrors['Dinner Restaurant']}</div>}
 
-              </Container> 
-            </div>
-            
+
+                <div className='flex justify-center m-5'>
+                  <Button className="align-self-center" size='lg' variant="dark" type="submit" onClick={handleSubmit}>
+                    Embark
+                  </Button>
+                </div>
+
+              </Col>
+
+            </Container>
           </div>
-        
+
+        </div>
+
       ) : (
         // 
-        <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover"}}>
+        <div className="" style={{ backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover" }}>
           <div className="text-center h-screen flex flex-col justify-center items-center ">
             <h1 className="text-3xl font-bold mb-5">Please Login to start your journey</h1>
             <div className=" p-5 ">
