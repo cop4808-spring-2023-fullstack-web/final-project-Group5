@@ -5,13 +5,17 @@ import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../config/config";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 const VideoSection = () => {
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
   const [token, setToken] = useState("");
-  const [user, setUser] = useState(auth.currentUser)
+  const [user, setUser] = useState(auth.currentUser);
   window.localStorage.setItem("user", auth.currentUser);
 
   useEffect(() => {
@@ -33,6 +37,21 @@ const VideoSection = () => {
       }
     });
   }, []);
+  const handleSignUp = async () => {
+    const email = prompt("Please enter your email:");
+    const password = prompt("Please enter your password:");
+
+    if (email && password) {
+      try {
+        const token = await signUp(email, password);
+        console.log("Sign-up token:", token);
+      } catch (error) {
+        console.error("Sign-up error:", error.message);
+      }
+    } else {
+      alert("Email and password cannot be empty.");
+    }
+  };
 
   const loginGoogle = async (e) => {
     signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
@@ -40,11 +59,12 @@ const VideoSection = () => {
         setAuthorized(true);
         window.localStorage.setItem("auth", "true");
       }
-      axios.post(`http://localhost:8000/user/${window.localStorage.get("user")}`)
-      .then(res => {
-        setUser(window.localStorage.get("user"))
-      })
-      .then(() => {})
+      axios
+        .post(`http://localhost:8000/user/${window.localStorage.get("user")}`)
+        .then((res) => {
+          setUser(window.localStorage.get("user"));
+        })
+        .then(() => {});
     });
   };
 
@@ -57,6 +77,37 @@ const VideoSection = () => {
     });
   };
 
+  async function signUp(email, password) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log("Sign-up successful:", user.uid);
+      return user.getIdToken();
+    } catch (error) {
+      console.error("Sign-up error:", error);
+      throw error;
+    }
+  }
+
+  async function signIn(email, password) {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log("Sign-in successful:", user.uid);
+      return user.getIdToken();
+    } catch (error) {
+      console.error("Sign-in error:", error);
+      throw error;
+    }
+  }
   return (
     <div className="video-container">
       <video src="/videos/video3.mp4" autoPlay loop muted />
@@ -89,14 +140,24 @@ const VideoSection = () => {
             </Button>
           </>
         ) : (
-          <Button
-            className="btns"
-            buttonStyle="btn--outline"
-            buttonSize="btn--large"
-            onClick={loginGoogle}
-          >
-            Get Started <i className="fa-solid fa-user"></i>
-          </Button>
+          <>
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+              onClick={handleSignUp}
+            >
+              Sign Up with Email <i className="fa-solid fa-envelope"></i>
+            </Button>
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+              onClick={loginGoogle}
+            >
+              Get Started With Google <i className="fa-solid fa-user"></i>
+            </Button>
+          </>
         )}
       </div>
     </div>
