@@ -47,8 +47,8 @@ export default function Explore(props) {
     if (startDate && endDate && startDate > endDate)
       errors.date = "End date should be after start date.";
 
-  
-    // if there are any errors in the form or tag selection, stop form submission and set errors
+
+    // if there are any errors in the form, stop form submission and set errors
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       return;
@@ -108,25 +108,25 @@ export default function Explore(props) {
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Hotel' onUpdate={handleUpdate} />
                 </div>
-               
+
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Breakfast Restaurant' onUpdate={handleUpdate} />
                 </div>
-               
+
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Lunch Restaurant' onUpdate={handleUpdate} />
                 </div>
-               
+
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Activity' onUpdate={handleUpdate} />
 
                 </div>
-                
+
                 <div className='flex justify-center m-5'>
                   <PrefTagSearch title='Dinner Restaurant' onUpdate={handleUpdate} />
 
                 </div>
-                
+
 
 
                 <div className='flex justify-center m-5'>
