@@ -9,6 +9,7 @@
     "yelp-fusion": "^3.0.0"
   },
   "scripts": {
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix odyssey && npm run build --prefix odyssey",
     "start": "nodemon yelpserver.js"
   }
 }
