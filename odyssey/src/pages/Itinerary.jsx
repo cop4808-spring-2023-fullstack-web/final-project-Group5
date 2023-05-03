@@ -1,4 +1,4 @@
-import { BusinessCard, LoginBtn } from "../components";
+import { LoginBtn } from "../components";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
