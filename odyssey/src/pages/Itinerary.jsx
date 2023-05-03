@@ -88,7 +88,7 @@ export default function Itinerary(props) {
           className=""
           style={{
             backgroundImage: "url('../images/rainbow-hills.jpg')",
-            backgroundSize: "cover",
+            backgroundSize: "auto",
             backgroundPosition: "center",
           }}
         >
