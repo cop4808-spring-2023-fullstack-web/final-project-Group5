@@ -45,20 +45,49 @@ app.get('/user/:userID', async function(req, res) {
 //post favorite to user ID
 app.post('/favorites/:userID', async function(req, res) {
   var id = req.params.userID;
-
+  var favID = req.body.bizID;
+  var rsp_obj = {};
   //w7iohA8FIDkeVUXeCqGvQg
-  coll.updateOne( { UID : id },{ $push: { "favorites": req.body.bizID } })
+  coll.updateOne( 
+    { UID : id },
+    { $push: { "favorites": favID } },
+    (err) => {
+      if (err) {
+        rsp_obj.id = -1;
+        rsp_obj.message = 'error - unable to add to favorites';
+        return res.status(200).send(rsp_obj);
+      } else {
+        rsp_obj.record_id = record_id;
+        rsp_obj.message = `successfully added ${favID} to favorites`;
+        return res.status(201).send(rsp_obj);
+      }
+    });
 
-  return res.status(201);
+  return res.status(201).send(rsp_obj);
 })
 
 //delete favorite from users favorites
 app.delete('/favorites/:userID', async function(req, res) {
   var id = req.params.userID;
+  var favID = req.body.bizID;
+  var rsp_obj = {};
 
-  coll.updateOne( { UID : id },{ $pull: { "favorites": req.body.bizID } })
+  coll.updateOne(
+    { UID : id },
+    { $pull: { "favorites": favID } },
+    function(err) {
+      if (err) {
+        rsp_obj.id = -1;
+        rsp_obj.message = 'error - unable to delete from favorites';
+        return res.status(200).send(rsp_obj);
+      } else {
+        rsp_obj.record_id = record_id;
+        rsp_obj.message = `successfully deleted ${favID} from favorites`;
+        return res.status(201).send(rsp_obj);
+      }
+    });
 
-  return res.status(200);
+  return res.status(200).send(rsp_obj);
 })
 
 //check if bizID is contained in users favorites
@@ -107,9 +136,6 @@ app.post('/user/:userID', async function(req, res) {
 
   return res.status(201).send(coll.findOne({ UID : id }));
 })
-
-
-
 
 'use strict';
 

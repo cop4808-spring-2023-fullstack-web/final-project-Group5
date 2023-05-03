@@ -50,6 +50,7 @@ export default function BusinessCard(props) {
       .then(() => {})
     }
 
+    checkFavorite();
     loadData();
 
   }, [auth.currentUser, props.bizID, props.token, user.uid])
