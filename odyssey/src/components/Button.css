@@ -41,10 +41,3 @@
   color: #242424;
   transition: 250ms;
 }
-
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 3vh; /* Adjust the height as needed */
-}

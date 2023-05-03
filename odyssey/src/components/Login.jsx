@@ -44,14 +44,14 @@ class Login extends React.Component {
     const { errorMessage } = this.state;
 
     return (
-      <div className="login-container">
-        <div className="login-box">
-          <h2 className="login-title">Login / Sign Up</h2>
+      <div className="login-container1">
+        <div className="login-box1">
+          <h2 className="login-title1">Login / Sign Up</h2>
           <div>
             <div>Email</div>
             <input
               id="email"
-              className="login-input"
+              className="login-input1"
               placeholder="Enter Email.."
               type="text"
             />
@@ -60,18 +60,18 @@ class Login extends React.Component {
             <div>Password</div>
             <input
               id="password"
-              className="login-input"
+              className="login-input1"
               placeholder="Enter Password.."
               type="password"
             />
           </div>
-          <button className="login-button" onClick={this.login}>
+          <button className="login-button1" onClick={this.login}>
             Login
           </button>
-          <button className="login-button" onClick={this.signUp}>
+          <button className="login-button1" onClick={this.signUp}>
             Sign Up
           </button>
-          {errorMessage && <div className="error-message">{errorMessage}</div>}
+          {errorMessage && <div className="error-message1">{errorMessage}</div>}
         </div>
       </div>
     );
