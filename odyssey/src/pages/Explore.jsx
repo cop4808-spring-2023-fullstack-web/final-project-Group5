@@ -15,7 +15,12 @@ export default function Explore(props) {
   //State and callback functions for the PrefTagSearch component
   const [preferenceData, setPreferenceData] = useState({})
   const handleUpdate = (title, tags) => {
-    setPreferenceData(prevData => ({ ...prevData, [title]: tags }));
+    //change to array of strings instead of array of objects: 
+    const formattedTagData = tags.map(tag => tag.value);
+    const key = title.replace(/restaurant/gi, '').trim().toLowerCase();
+    //setting preferenceData = formmated data with lowercase titles
+    setPreferenceData(prevData => ({ ...prevData, [key]: formattedTagData }));
+    console.log(preferenceData);
   }
 
   useEffect(() => {
