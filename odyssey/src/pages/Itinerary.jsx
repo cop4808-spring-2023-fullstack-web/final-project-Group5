@@ -1,137 +1,145 @@
-import { BusinessCard, LoginBtn } from "../components";
+import { LoginBtn } from "../components";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import TestCard from "../components/TestCard";
 
 export default function Itinerary(props) {
   //get auth token from state
-  const authToken = props.token
+  const authToken = props.token;
   //useState for checking authorization status
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
-  
+
   // get query parameters
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  
+
   // get destination, startDate, endDate from query parameters
   const destination = queryParams.get("destination");
   const startDate = queryParams.get("startDate");
   const endDate = queryParams.get("destination");
-  
+
   // Initialize states for business id's of place categories
   const [hotelBizID, setHotelBizID] = useState("");
   const [breakfastBizID, setBreakfastBizID] = useState("");
   const [lunchBizID, setLunchBizID] = useState("");
   const [activityBizID, setActivityBizID] = useState("");
   const [dinnerBizID, setDinnerBizID] = useState("");
-  
+
   useEffect(() => {
-    if(authToken) {
+    if (authToken) {
       setAuthorized(true);
     }
-    // get Hotel from backend
-    axios.get(`http://localhost:8000/search/Hotel/${destination}`)
-      .then(response => {
-        if (response.data.length > 0) {
-          setHotelBizID(response.data[0].id);
+    const fetchData = async () => {
+      try {
+        // get Hotel from backend
+        const hotelResponse = await axios.get(
+          `http://localhost:8000/search/Hotel/${destination}`
+        );
+        if (hotelResponse.data.length > 0) {
+          setHotelBizID(hotelResponse.data[0]);
         }
-      })
-      .catch(error => {
-        console.log(error);
-      });
 
-    // get Breakfast from backend
-    axios.get(`http://localhost:8000/search/Breakfast/${destination}`)
-      .then(response => {
-        if (response.data.length > 0) {
-          setBreakfastBizID(response.data[0].id);
+        // get Breakfast from backend
+        const breakfastResponse = await axios.get(
+          `http://localhost:8000/search/Breakfast/${destination}`
+        );
+        if (breakfastResponse.data.length > 0) {
+          setBreakfastBizID(breakfastResponse.data[0]);
         }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    
-    // get Lunch from backend
-    axios.get(`http://localhost:8000/search/Lunch/${destination}`)
-      .then(response => {
-        if (response.data.length > 0) {
-          setLunchBizID(response.data[0].id);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    
-    // get Activity from backend
-    axios.get(`http://localhost:8000/search/Activity/${destination}`)
-      .then(response => {
-        if (response.data.length > 0) {
-          setActivityBizID(response.data[0].id);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
 
-    // get Dinner from backend
-    axios.get(`http://localhost:8000/search/Dinner/${destination}`)
-    .then(response => {
-      if (response.data.length > 0) {
-        setDinnerBizID(response.data[0].id);
+        // get Lunch from backend
+        const lunchResponse = await axios.get(
+          `http://localhost:8000/search/Lunch/${destination}`
+        );
+        if (lunchResponse.data.length > 0) {
+          setLunchBizID(lunchResponse.data[0]);
+        }
+
+        // get Activity from backend
+        const activityResponse = await axios.get(
+          `http://localhost:8000/search/Activity/${destination}`
+        );
+        if (activityResponse.data.length > 0) {
+          setActivityBizID(activityResponse.data[0]);
+        }
+
+        // get Dinner from backend
+        const dinnerResponse = await axios.get(
+          `http://localhost:8000/search/Dinner/${destination}`
+        );
+        if (dinnerResponse.data.length > 0) {
+          setDinnerBizID(dinnerResponse.data[0]);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    })
-    .catch(error => {
-      console.log(error);
-    });
-  }, [authToken, setAuthorized], [destination])
+    };
 
-  return(
+    fetchData();
+  }, []);
+
+  return (
     <>
-    {authorized ? (
-      <div className="" style={{backgroundImage: "url('../images/rainbow-hills.jpg')", backgroundSize: "cover"}}>
-        <div className="text-center flex flex-col justify-center items-center ">
-          <h1 className='text-center m-5 text-3xl'>Your Current Itinerary</h1>
-          
-            <div className="flex flex-col justify-center">
-              <p className="m-0 text-center">Hotel Recommendation:</p>
-              <BusinessCard bizID={hotelBizID} token={authorized}/>
+      {authorized ? (
+        <div
+          className=""
+          style={{
+            backgroundImage: "url('../images/rainbow-hills.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="container-fluid pt-5 pb-4">
+            <h1 className="text-center text-3xl h1">Your Current Itinerary</h1>
+
+            <div className="row justify-center mb-3 ">
+              <p className="m-0 text-center m-2">Hotel Recommendation:</p>
+              <TestCard business={hotelBizID} token={authorized} />
             </div>
 
-            <div className="flex flex-col justify-center">
-              <p className="m-0 text-center">Breakfast Recommendation:</p>
-              <BusinessCard bizID={breakfastBizID} token={authorized}/>
+            <div className="row justify-center mb-3">
+              <p className="m-0 text-center m-2">Breakfast Recommendation:</p>
+              <TestCard business={breakfastBizID} token={authorized} />
             </div>
 
-            <div className="flex flex-col justify-center">
-              <p className="m-0 text-center">Lunch Recommendation:</p>
-              <BusinessCard bizID={lunchBizID} token={authorized}/>
+            <div className="row justify-center mb-3">
+              <p className="m-0 text-center m-2">Lunch Recommendation:</p>
+              <TestCard business={lunchBizID} token={authorized} />
             </div>
 
-            <div className="flex flex-col justify-center">
-              <p className="m-0 text-center">Activity Recommendation:</p>
-              <BusinessCard bizID={activityBizID} token={authorized}/>
+            <div className="row justify-center mb-3">
+              <p className="m-0 text-center m-2">Activity Recommendation:</p>
+              <TestCard business={activityBizID} token={authorized} />
             </div>
 
-            <div className="flex flex-col justify-center">
-              <p className="m-0 text-center">Dinner Recommendation:</p>
-              <BusinessCard bizID={dinnerBizID} token={authorized}/>
+            <div className="row justify-center mb-3">
+              <p className="m-0 text-center m-2">Dinner Recommendation:</p>
+              <TestCard business={dinnerBizID} token={authorized} />
             </div>
-
-          
+          </div>
         </div>
-      </div>
-    ) : (
-      <div className="" style={{backgroundImage: "url('../images/rainbow-hills.jpg')", backgroundSize: "cover"}}>
+      ) : (
+        <div
+          className=""
+          style={{
+            backgroundImage: "url('../images/rainbow-hills.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
           <div className="text-center h-screen flex flex-col justify-center items-center ">
-            <h1 className="text-3xl font-bold mb-5">Please Login to start your journey</h1>
+            <h1 className="text-3xl font-bold mb-5">
+              Please Login to start your journey
+            </h1>
             <div className=" p-5 ">
               <LoginBtn />
             </div>
           </div>
         </div>
-    )}  
+      )}
     </>
-  )
+  );
 }

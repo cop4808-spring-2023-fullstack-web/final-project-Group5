@@ -70,13 +70,16 @@ export default function Explore(props) {
   return (
     <>
       {authorized ? (
-        <div className="" style={{ backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover" }}>
-          <div className="text-center flex flex-col justify-center items-center ">
-            <Container>
+
+         <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover", backgroundPosition: "center"}}>
+            <div className="text-center flex flex-col justify-center items-center ">
+              <Container>
+
 
               <Col lg={6} className="mx-auto">
 
-                <h1 className='text-center m-5 text-3xl'>Start Your Trip</h1>
+
+                  <h1 className='text-center m-5 text-3xl h1'>Start Your Trip</h1>
 
                 <div className='flex justify-center m-5'>
                   <Card className='p-4 w-[600px]' style={{ backgroundColor: "rgba(255, 255, 255, 0.3)" }}>
@@ -139,7 +142,9 @@ export default function Explore(props) {
 
       ) : (
         // 
-        <div className="" style={{ backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover" }}>
+
+        <div className="" style={{backgroundImage: "url('../images/lake-boats.jpg')", backgroundSize: "cover", backgroundPosition: "center"}}>
+
           <div className="text-center h-screen flex flex-col justify-center items-center ">
             <h1 className="text-3xl font-bold mb-5">Please Login to start your journey</h1>
             <div className=" p-5 ">
