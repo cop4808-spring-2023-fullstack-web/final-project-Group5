@@ -52,7 +52,11 @@ export default class TestCard extends Component {
                   variant="transparent"
                   className="position-absolute top-0 end-0 mt-3 me-3"
                 >
-                  <HeartFill className="text-danger" />
+                  {business.isFavorite ? (
+                    <HeartFill className="text-danger" />
+                  ) : (
+                    <Heart className="text-danger" />
+                  )}
                 </Button>
                 <div className="position-absolute bottom-0 mb-2">
                   <h3 className="card-title" id="Business-Name">
