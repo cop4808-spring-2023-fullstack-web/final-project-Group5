@@ -48,7 +48,7 @@ class Login extends React.Component {
         <div className="login-box1">
           <h2 className="login-title1">Login / Sign Up</h2>
           <div>
-            <div>Email</div>
+            <div className="login-text1">Email</div>
             <input
               id="email"
               className="login-input1"
@@ -57,7 +57,7 @@ class Login extends React.Component {
             />
           </div>
           <div>
-            <div>Password</div>
+            <div className="login-text1">Password</div>
             <input
               id="password"
               className="login-input1"
