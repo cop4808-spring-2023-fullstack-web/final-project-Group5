@@ -35,41 +35,35 @@ export default function Itinerary(props) {
     const fetchData = async () => {
       try {
         // get Hotel from backend
-        const hotelResponse = await axios.get(
-          `http://localhost:8000/search/Hotel/${destination}`
-        );
+        const hotelResponse = await axios.get(`/search/Hotel/${destination}`);
         if (hotelResponse.data.length > 0) {
           setHotelBizID(hotelResponse.data[0]);
         }
 
         // get Breakfast from backend
         const breakfastResponse = await axios.get(
-          `http://localhost:8000/search/Breakfast/${destination}`
+          `/search/Breakfast/${destination}`
         );
         if (breakfastResponse.data.length > 0) {
           setBreakfastBizID(breakfastResponse.data[0]);
         }
 
         // get Lunch from backend
-        const lunchResponse = await axios.get(
-          `http://localhost:8000/search/Lunch/${destination}`
-        );
+        const lunchResponse = await axios.get(`/search/Lunch/${destination}`);
         if (lunchResponse.data.length > 0) {
           setLunchBizID(lunchResponse.data[0]);
         }
 
         // get Activity from backend
         const activityResponse = await axios.get(
-          `http://localhost:8000/search/Activity/${destination}`
+          `/search/Activity/${destination}`
         );
         if (activityResponse.data.length > 0) {
           setActivityBizID(activityResponse.data[0]);
         }
 
         // get Dinner from backend
-        const dinnerResponse = await axios.get(
-          `http://localhost:8000/search/Dinner/${destination}`
-        );
+        const dinnerResponse = await axios.get(`/search/Dinner/${destination}`);
         if (dinnerResponse.data.length > 0) {
           setDinnerBizID(dinnerResponse.data[0]);
         }
@@ -88,7 +82,7 @@ export default function Itinerary(props) {
           className=""
           style={{
             backgroundImage: "url('../images/rainbow-hills.jpg')",
-            backgroundSize: "cover",
+            backgroundSize: "auto",
             backgroundPosition: "center",
           }}
         >
