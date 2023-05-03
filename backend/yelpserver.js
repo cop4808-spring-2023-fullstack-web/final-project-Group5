@@ -46,7 +46,6 @@ app.get('/user/:userID', async function(req, res) {
 app.post('/favorites/:userID', async function(req, res) {
   var id = req.params.userID;
 
-  //w7iohA8FIDkeVUXeCqGvQg
   coll.updateOne( { UID : id },{ $push: { "favorites": req.body.bizID } })
 
   return res.status(201);
@@ -61,35 +60,47 @@ app.delete('/favorites/:userID', async function(req, res) {
   return res.status(200);
 })
 
-//check if bizID is contained in users favorites
-app.get('/isfavorite/:userID', async function(req, res) {
+//edit preferenes
+app.patch('/preferences/:userID', async function(req, res) {
   var id = req.params.userID;
 
-  if(coll.findOne( { UID : id }, {favorites: req.body.bizID})) {
-    return res.status(200).send(true)
-  }else{
-    return res.status(404).send(false)
+  const newPreferences = {
+    "hotel": req.body.hotel,
+    "breakfast": req.body.breakfast,
+    "lunch": req.body.lunch,
+    "activity": req.body.activity,
+    "dinner": req.body.dinner   
   }
-})
-
-//add preferenes
-app.post('/preferences/:userID', async function(req, res) {
-  var id = req.params.userID;
 
   coll.updateOne(
     { UID : id },
-    { $set: { 
-        "preferences": {
-          "hotel": [req.body.hotel],
-          "breakfast": [req.body.breakfast],
-          "lunch": [req.body.lunch],
-          "activity": [req.body.activity],
-          "dinner": [req.body.dinner] 
-        } 
-      } 
-    }   
+    { $set: { preferences : newPreferences } }    
   )
-  return res.status(201);
+  return res.status(201).send(newPreferences);
+})
+
+//add trip with data
+app.post('/trip/:userID', async function(req, res) {
+  var id = req.params.userID;
+
+  const trip = {
+    "id": "1",
+    "destination": req.body.destination,
+    "from": req.body.from,
+    "to": req.body.to,
+    "hotel": req.body.hotel,
+    "breakfast": req.body.breakfast,
+    "lunch": req.body.lunch,
+    "activity": req.body.activity,
+    "dinner": req.body.dinner
+  }
+
+  coll.updateOne(
+    { UID : id },
+    { $push: { trips: trip } }   
+  )
+
+  return res.status(201).send(trip);
 })
 
 //add a user
@@ -100,15 +111,19 @@ app.post('/user/:userID', async function(req, res) {
     {
       "favorites": [],
       "trips": [],
-      "preferences": [],
+      "preferences": {
+        "hotel": [],
+        "breakfast": [],
+        "lunch": [],
+        "activity": [],
+        "dinner": [] 
+      },
       "UID": id
     }
   )
 
   return res.status(201).send(coll.findOne({ UID : id }));
 })
-
-
 
 
 'use strict';
