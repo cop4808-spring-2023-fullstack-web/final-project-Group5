@@ -9,7 +9,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import Login from "./Login";
 
 const VideoSection = () => {
   const [authorized, setAuthorized] = useState(
@@ -142,17 +141,22 @@ const VideoSection = () => {
           </>
         ) : (
           <>
-            <div class="container">
-              <Button
-                className="btns"
-                buttonStyle="btn--outline"
-                buttonSize="btn--large"
-                onClick={loginGoogle}
-              >
-                Get Started With Google <i className="fa-solid fa-user"></i>
-              </Button>
-            </div>
-            <Login></Login>
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+              onClick={handleSignUp}
+            >
+              Sign Up with Email <i className="fa-solid fa-envelope"></i>
+            </Button>
+            <Button
+              className="btns"
+              buttonStyle="btn--outline"
+              buttonSize="btn--large"
+              onClick={loginGoogle}
+            >
+              Get Started With Google <i className="fa-solid fa-user"></i>
+            </Button>
           </>
         )}
       </div>
