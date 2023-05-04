@@ -3,9 +3,54 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Placeholder } from "react-bootstrap";
 import { StarFill, StarHalf, Heart, HeartFill } from "react-bootstrap-icons";
+import { getAuth } from "firebase/auth";
+import axios from "axios";
 
 export default class TestCard extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFavorite: false,
+    };
+  }
+
+  validateFavorite = async () => {
+    const { business } = this.props;
+    const auth = getAuth();
+    const user = auth.currentUser;
+    let isFavorite = false;
+
+    try {
+      const res = await axios.get(`/favorites/${user.uid}/${business.id}`);
+      if (res.data && res.data.isFavorite) {
+        isFavorite = true;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    this.setState({ isFavorite });
+  };
+
+  handleFavorite = async () => {
+    const { business } = this.props;
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    try {
+      await axios.put(`/favorites/${user.uid}/${business.id}`, business);
+      this.setState({ isFavorite: !this.state.isFavorite });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   render() {
+    // validateFavorite = async () => {
+    //   const auth = getAuth();
+    //   const user = auth.currentUser;
+    // };
+
     // handles the height of card-img-overlay
     const handleImageLoad = (event) => {
       const img = event.target;
@@ -27,7 +72,7 @@ export default class TestCard extends Component {
       <>
         {business ? (
           <div
-            className="card text-white"
+            className="card text-white m-auto mb-4"
             style={{
               maxWidth: "400px",
               paddingLeft: "0px",
@@ -51,8 +96,13 @@ export default class TestCard extends Component {
                 <Button
                   variant="transparent"
                   className="position-absolute top-0 end-0 mt-3 me-3"
+                  onClick={this.handleFavorite}
                 >
-                  <HeartFill className="text-danger" />
+                  {this.state.isFavorite ? (
+                    <HeartFill className="text-danger" />
+                  ) : (
+                    <Heart className="text-danger" />
+                  )}
                 </Button>
                 <div className="position-absolute bottom-0 mb-2">
                   <h3 className="card-title" id="Business-Name">
@@ -113,7 +163,7 @@ export default class TestCard extends Component {
           </div>
         ) : (
           <Card
-            className="m-auto"
+            className="m-auto mb-4"
             style={{ width: "400px", maxWidth: "400px" }}
           >
             <Placeholder

@@ -1,60 +1,66 @@
-import { BusinessCard, LoginBtn } from "../components"
-import { useState, useEffect } from "react"
+import { LoginBtn } from "../components";
+import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import axios from "axios";
+import TestCard from "../components/TestCard";
 
 export default function Favorites(props) {
   //get auth token from state
-  const authToken = props.token
+  const authToken = props.token;
 
   //useState for checking authorization status
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
-  const [auth, setAuth] = useState(getAuth())
+  const [auth, setAuth] = useState(getAuth());
 
-  const [favorites, setFavorites] = useState([])
-  const [user, setUser] = useState(auth.currentUser)
+  const [favorites, setFavorites] = useState([]);
+  const [user, setUser] = useState(auth.currentUser);
 
   useEffect(() => {
-    if(authToken) {
+    if (authToken) {
       setAuthorized(true);
     }
-    setAuth(getAuth())
-    setUser(auth.currentUser)
+    setAuth(getAuth());
+    setUser(auth.currentUser);
 
     const loadFavorites = () => {
-      axios.get(`http://localhost:8000/user/${user.uid}`)
-      .then(res => {
-        setFavorites(res.data.favorites)
-      })
-      .catch(err => {
-        console.log(err)
-      })
-      .then(() => {})
-    }
+      if (auth.currentUser) {
+        axios
+          .get(`/favorites/${auth.currentUser.uid}`)
+          .then((res) => {
+            setFavorites(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .then(() => {});
+      }
+    };
 
-    if(authorized){
+    if (authorized) {
       loadFavorites();
     }
-  }, [auth.currentUser, authToken, authorized])
+  }, [auth.currentUser, authToken, authorized]);
 
-  return(
+  return (
     <>
-    {authorized ? (
-      <div className="flex flex-col justify-center">
-        <h1 className="m-3 text-center">Your favorite businesses!</h1>
-        {favorites && favorites.length > 0 && 
-          favorites.map((biz) => (
-            <BusinessCard bizID={biz} />
-          ))}
-      </div>
-    ) : (
-      <div>
-        Please login to see your favorites!
-        <LoginBtn />
-      </div>
-    )}
+      {authorized ? (
+        <div className="flex flex-col justify-center">
+          <h1 className="m-5 text-center">Your favorite businesses!</h1>
+
+          <div className="row m-3 g-1">
+            {favorites &&
+              favorites.length > 0 &&
+              favorites.map((biz) => <TestCard business={biz} />)}
+          </div>
+        </div>
+      ) : (
+        <div>
+          Please login to see your favorites!
+          <LoginBtn />
+        </div>
+      )}
     </>
-  )
+  );
 }

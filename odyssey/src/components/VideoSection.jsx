@@ -16,25 +16,43 @@ const VideoSection = () => {
     false || window.localStorage.getItem("auth") === "true"
   );
   const [token, setToken] = useState("");
-  const [user, setUser] = useState(auth.currentUser);
-  window.localStorage.setItem("user", auth.currentUser);
+  const [user, setUser] = useState("");
 
   useEffect(() => {
-    setUser(auth.currentUser);
-
     auth.onAuthStateChanged((userCred) => {
       if (userCred) {
+        setUser(userCred.uid); //
+        console.log(userCred.uid);
         setAuthorized(true);
         window.localStorage.setItem("auth", "true");
+        window.localStorage.setItem("user", userCred.uid);
+
+        axios
+          .post(`/user/${userCred.uid}`)
+          .then((res) => {
+            if (res.data.message === "user already exists") {
+              console.log("User profile already exists");
+            } else if (
+              res.data.message === "user profile created successfully"
+            ) {
+              console.log("User profile created successfully");
+            }
+          })
+          .catch((err) => {
+            console.log("Error creating user profile:", err);
+          });
+
         userCred.getIdToken().then((token) => {
           setToken(token);
           window.localStorage.setItem("token", token);
+          // window.localStorage.setItem("user", user);
         });
       } else {
         setAuthorized(false);
         setToken("");
         window.localStorage.removeItem("auth");
         window.localStorage.removeItem("token");
+        window.localStorage.removeItem("user");
       }
     });
   }, []);
@@ -60,12 +78,6 @@ const VideoSection = () => {
         setAuthorized(true);
         window.localStorage.setItem("auth", "true");
       }
-      axios
-        .post(`http://localhost:8000/user/${window.localStorage.get("user")}`)
-        .then((res) => {
-          setUser(window.localStorage.get("user"));
-        })
-        .then(() => {});
     });
   };
 
@@ -75,6 +87,7 @@ const VideoSection = () => {
       setToken("");
       window.localStorage.removeItem("auth");
       window.localStorage.removeItem("token");
+      window.localStorage.removeItem("user");
     });
   };
 
