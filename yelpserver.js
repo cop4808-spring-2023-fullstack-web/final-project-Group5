@@ -41,68 +41,62 @@ app.use(cors(corsOptions));
 
 //mongo endpoints here
 
-// NEW working favorites
 app.put("/favorites/:userID/:businessID", function (req, res) {
-  // defined object for response
-  var rsp_obj = {};
   const businessID = req.params.businessID;
-
-  // define user ID from authenticated user
   const userID = req.params.userID;
-
-  // define obj for favorite
   const favorite = req.body;
 
   collection
     .findOne({ userID: userID, "favorites.id": businessID })
     .then((result) => {
+      var rsp_obj = {}; // create a response object to store response message and status code
       if (result) {
-        // if business id is found remove business from favorites
         collection
           .updateOne({ userID: userID }, { $pull: { favorites: favorite } })
           .then((result) => {
-            rsp_obj.message = "added to favorite";
-            rsp_obj.isFavorite = true;
-            res.status(200).send(rsp_obj);
+            rsp_obj.message =
+              "Business is already in favorites and has now been removed";
+            rsp_obj.isFavorite = false;
+            rsp_obj.status = 200; // set the status code in the response object
+            res.send(rsp_obj); // send the response object to the client
           })
           .catch((err) => {
             rsp_obj.message = "error - add to favorite failed";
             rsp_obj.isFavorite = false;
-            res.status(500).send(rsp_obj);
+            rsp_obj.status = 500;
+            res.send(rsp_obj);
           });
-
-        rsp_obj.message =
-          "Business is already in favorites has now been removed";
-        rsp_obj.isFavorite = false;
-        res.status(409).send(rsp_obj);
       } else {
-        // if business is not in favorites try adding to favorites
         collection
           .updateOne({ userID: userID }, { $push: { favorites: favorite } })
           .then((result) => {
-            rsp_obj.message = "added to favorite";
-            res.status(200).send(rsp_obj.message);
+            rsp_obj.message = "Business added to favorites";
+            rsp_obj.status = 200;
+            res.send(rsp_obj);
           })
           .catch((err) => {
             rsp_obj.message = "error - add to favorite failed";
-            res.status(500).send(rsp_obj.message);
+            rsp_obj.status = 500;
+            res.send(rsp_obj);
           });
       }
     })
     .catch((err) => {
+      var rsp_obj = {};
       rsp_obj.message = "error - issue finding business in favorites";
       rsp_obj.isFavorite = false;
-      res.status(509).send(rsp_obj);
+      rsp_obj.status = 509;
+      res.send(rsp_obj);
     });
 });
 
-//get user obj based on userID
-app.get("/user/:userID", async function (req, res) {
-  var id = req.params.userID;
+// //get user obj based on userID
+// app.get("/user/:userID", async function (req, res) {
+//   var id = req.params.userID;
 
-  const cursor = await coll.findOne({ UID: id });
-  return res.status(200).send(cursor);
-});
+//   const cursor = await coll.findOne({ UID: id });
+//   return res.status(200).send(cursor);
+// });
 
 // NEW get all favorite businesses of a user
 app.get("/favorites/:userID", async function (req, res) {
