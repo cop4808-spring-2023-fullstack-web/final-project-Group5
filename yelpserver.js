@@ -1,16 +1,19 @@
 //load keys from the .env file
 require("dotenv").config();
+const mongoose = require("mongoose");
 
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-const { MongoClient } = require("mongodb");
-const uri = process.env.URI;
-const mongoClient = new MongoClient(uri);
-mongoClient.connect();
-const db = mongoClient.db("odyssey");
-const coll = db.collection("users");
+// Connect to MongoDB and once connected listen for requests on port 5678
+mongoose
+  .connect(process.env.URI)
+  .then(() => console.log(`Connected to MongoDB`))
+  .catch((err) => console.log(`Error connecting to MongoDB`, err));
+
+const db = mongoose.connection; //set db to mongoose connection
+const collection = db.collection(process.env.Col); //set collection to full database collection
 
 const yelp = require("yelp-fusion");
 const client = yelp.client(process.env.yelpAPIkey);
@@ -37,6 +40,57 @@ var corsOptions = {
 app.use(cors(corsOptions));
 
 //mongo endpoints here
+
+// NEW working favorites
+app.put("/favorites/:userID/:businessID", function (req, res) {
+  // defined object for response
+  var rsp_obj = {};
+  const businessID = req.params.businessID;
+
+  // define user ID from authenticated user
+  const userID = req.params.userID;
+
+  // define obj for favorite
+  const favorite = req.body;
+
+  collection
+    .findOne({ userID: userID, "favorites.id": businessID })
+    .then((result) => {
+      if (result) {
+        // if business id is found remove business from favorites
+        collection
+          .updateOne({ userID: userID }, { $pull: { favorites: favorite } })
+          .then((result) => {
+            rsp_obj.message = "added to favorite";
+            res.status(200).send(rsp_obj.message);
+          })
+          .catch((err) => {
+            rsp_obj.message = "error - add to favorite failed";
+            res.status(500).send(rsp_obj.message);
+          });
+
+        rsp_obj.message =
+          "Business is already in favorites has now been removed";
+        res.status(409).send(rsp_obj.message);
+      } else {
+        // if business is not in favorites try adding to favorites
+        collection
+          .updateOne({ userID: userID }, { $push: { favorites: favorite } })
+          .then((result) => {
+            rsp_obj.message = "added to favorite";
+            res.status(200).send(rsp_obj.message);
+          })
+          .catch((err) => {
+            rsp_obj.message = "error - add to favorite failed";
+            res.status(500).send(rsp_obj.message);
+          });
+      }
+    })
+    .catch((err) => {
+      rsp_obj.message = "error - issue finding business in favorites";
+    });
+});
+
 //get user obj based on userID
 app.get("/user/:userID", async function (req, res) {
   var id = req.params.userID;
@@ -45,25 +99,52 @@ app.get("/user/:userID", async function (req, res) {
   return res.status(200).send(cursor);
 });
 
-//post favorite to user ID
-app.post("/favorites/:userID", async function (req, res) {
-  var id = req.params.userID;
+// NEW get all favorite businesses of a user
+app.get("/favorites/:userID", async function (req, res) {
+  const userID = req.params.userID;
 
-  coll.updateOne({ UID: id }, { $push: { favorites: req.body.bizID } });
+  try {
+    const user = await collection.findOne({ userID: userID });
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
 
-  return res.status(201);
+    const favorites = user.favorites;
+    return res.status(200).send(favorites);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server error");
+  }
 });
 
-//delete favorite from users favorites
-app.delete("/favorites/:userID", async function (req, res) {
-  var id = req.params.userID;
+// NEW check if business exists in user favs returns response obj with isFavorite true or false
+app.get("/isfav/:userID/:bizID", async function (req, res) {
+  const userID = req.params.userID;
+  const businessID = req.params.bizID;
 
-  coll.updateOne({ UID: id }, { $pull: { favorites: req.body.bizID } });
-
-  return res.status(200);
+  collection
+    .findOne({ userID: userID, "favorites.id": businessID })
+    .then((result) => {
+      if (result) {
+        res
+          .status(200)
+          .send({ isFavorite: true, message: "Business exists in favorites" });
+      } else {
+        res.status(200).send({
+          isFavorite: false,
+          message: "Business does not exist in favorites",
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({
+        isFavorite: false,
+        message: "Error finding business in favorites",
+      });
+    });
 });
 
-//edit preferenes
+//edit preferences
 app.patch("/preferences/:userID", async function (req, res) {
   var id = req.params.userID;
 
@@ -100,24 +181,48 @@ app.post("/trip/:userID", async function (req, res) {
   return res.status(201).send(trip);
 });
 
-//add a user
+// NEW add a user profile for user for the first time.
 app.post("/user/:userID", async function (req, res) {
-  var id = req.params.userID;
+  var userID = req.params.userID;
 
-  coll.insertOne({
-    favorites: [],
-    trips: [],
-    preferences: {
-      hotel: [],
-      breakfast: [],
-      lunch: [],
-      activity: [],
-      dinner: [],
-    },
-    UID: id,
-  });
-
-  return res.status(201).send(coll.findOne({ UID: id }));
+  collection
+    .findOne({ userID: userID })
+    .then((result) => {
+      if (result) {
+        // user exists in database
+        res.status(200).send({ message: "user already exists" });
+      } else {
+        collection
+          .insertOne({
+            userID: id,
+            favorites: [],
+            trips: [],
+            preferences: {
+              hotel: [],
+              breakfast: [],
+              lunch: [],
+              activity: [],
+              dinner: [],
+            },
+          })
+          .then((result) => {
+            if (result) {
+              // user profile created message can be changed
+              res
+                .status(200)
+                .send({ message: "user profile created successfully" });
+            } else {
+              res.status(509).send({ message: "error creating user profile" });
+            }
+          })
+          .catch((err) => {
+            res.status(505).send({ message: "server error occurred" });
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(509).send({ message: "error finding user" });
+    });
 });
 
 ("use strict");
