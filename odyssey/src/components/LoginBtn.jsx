@@ -1,10 +1,8 @@
-import { Button } from "react-bootstrap"
-import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { Button } from "react-bootstrap";
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../config/config";
-import { useState, useEffect } from "react";
 
 export default function LoginBtn() {
-
   const loginGoogle = async (e) => {
     signInWithPopup(auth, new GoogleAuthProvider()).then((userCred) => {
       if (userCred) {
@@ -15,8 +13,8 @@ export default function LoginBtn() {
   };
 
   return (
-      <Button className="m-2" size="lg" variant="dark" onClick={loginGoogle}>
-        Log in <i className="fa-solid fa-user"></i>
-      </Button>
-  )
+    <Button className="m-2" size="lg" variant="dark" onClick={loginGoogle}>
+      Log in <i className="fa-solid fa-user"></i>
+    </Button>
+  );
 }
