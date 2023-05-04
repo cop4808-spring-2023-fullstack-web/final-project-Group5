@@ -62,16 +62,19 @@ app.put("/favorites/:userID/:businessID", function (req, res) {
           .updateOne({ userID: userID }, { $pull: { favorites: favorite } })
           .then((result) => {
             rsp_obj.message = "added to favorite";
-            res.status(200).send(rsp_obj.message);
+            rsp_obj.isFavorite = true;
+            res.status(200).send(rsp_obj);
           })
           .catch((err) => {
             rsp_obj.message = "error - add to favorite failed";
-            res.status(500).send(rsp_obj.message);
+            rsp_obj.isFavorite = false;
+            res.status(500).send(rsp_obj);
           });
 
         rsp_obj.message =
           "Business is already in favorites has now been removed";
-        res.status(409).send(rsp_obj.message);
+        rsp_obj.isFavorite = false;
+        res.status(409).send(rsp_obj);
       } else {
         // if business is not in favorites try adding to favorites
         collection
@@ -88,6 +91,8 @@ app.put("/favorites/:userID/:businessID", function (req, res) {
     })
     .catch((err) => {
       rsp_obj.message = "error - issue finding business in favorites";
+      rsp_obj.isFavorite = false;
+      res.status(509).send(rsp_obj);
     });
 });
 
