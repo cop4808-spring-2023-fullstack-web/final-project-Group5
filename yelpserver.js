@@ -187,13 +187,16 @@ app.post("/user/:userID", async function (req, res) {
   collection
     .findOne({ userID: userID })
     .then((result) => {
+      rsp_obj = {};
       if (result) {
         // user exists in database
-        res.status(200).send({ message: "user already exists" });
+        rsp_obj.status = 300;
+        rsp_obj.message = "user already exists";
+        res.send(rsp_obj);
       } else {
         collection
           .insertOne({
-            userID: id,
+            userID: userID,
             favorites: [],
             trips: [],
             preferences: {
@@ -207,20 +210,26 @@ app.post("/user/:userID", async function (req, res) {
           .then((result) => {
             if (result) {
               // user profile created message can be changed
-              res
-                .status(200)
-                .send({ message: "user profile created successfully" });
+              rsp_obj.message = "user profile created successfully";
+              rsp_obj.status = 200;
+              res.send(rsp_obj);
             } else {
-              res.status(509).send({ message: "error creating user profile" });
+              rsp_obj.message = "error creating user profile";
+              rsp_obj.status = 509;
+              res.send(rsp_obj);
             }
           })
           .catch((err) => {
-            res.status(505).send({ message: "server error occurred" });
+            rsp_obj.message = "error with database";
+            rsp_obj.status = 505;
+            res.send(rsp_obj);
           });
       }
     })
     .catch((err) => {
-      res.status(509).send({ message: "error finding user" });
+      rsp_obj.message = "unable to find user";
+      rsp_obj.status = 509;
+      res.send(rsp_obj);
     });
 });
 
