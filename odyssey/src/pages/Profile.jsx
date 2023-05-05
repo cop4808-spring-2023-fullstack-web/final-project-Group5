@@ -1,5 +1,5 @@
-import { Button } from "react-bootstrap"
-import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
+import { Button } from "react-bootstrap";
+import { signOut, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../config/config";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -10,14 +10,13 @@ import { getAuth } from "firebase/auth";
 import { LoginBtn } from "../components";
 
 export default function Profile() {
-
   const [authorized, setAuthorized] = useState(
     false || window.localStorage.getItem("auth") === "true"
   );
 
   const user = auth.currentUser;
-  let displayName = '';
-  let email = '';
+  let displayName = "";
+  let email = "";
   if (user !== null) {
     // The user object has basic properties such as display name, email, etc.
     displayName = user?.displayName;
@@ -49,32 +48,43 @@ export default function Profile() {
 
   return (
     <>
-    {authorized ? (
-      <div className="d-flex flex-row">
-      <div className="d-flex flex-column p-3" style={{width:'280px'}}>      
-        <Nav className="flex-column">
-          <Nav.Link as={Link} to={"/profile"} className="m-2 bg-dark rounded text-light mb-2 active">
-            <i class="fa-solid fa-user me-2"></i>
-            Profile
-          </Nav.Link>
-          <Nav.Link as={Link} to={"/preferences"} className="m-2 bg-dark rounded text-light mb-2">
-            <i class="fa-solid fa-gear me-2"></i>
-            Preferences
-          </Nav.Link>
-        </Nav>
-        <Button className="m-2" size="lg" variant="dark" onClick={logout}>
-          Logout <i className="fa-solid fa-sign-out"></i>
-        </Button>
-      </div>
-      <div className="container-fluid flex flex-col justify-center items-center">
-          <h3>Current User</h3>
-          <p>Username: {displayName}</p>
-          <p>Email: {email}</p>
-      </div>
-    </div>
-    ) : (
-      <LoginBtn />
-    )} 
+      {authorized ? (
+        <div className="d-flex h-screen flex-row">
+          <div
+            className="d-flex h-screen flex-column p-3 bg-light shadow"
+            style={{ width: "280px" }}
+          >
+            <Nav className="flex-column">
+              <Nav.Link
+                as={Link}
+                to={"/profile"}
+                className="m-2 bg-dark rounded text-light mb-2 active"
+              >
+                <i class="fa-solid fa-user me-2"></i>
+                Profile
+              </Nav.Link>
+              <Nav.Link
+                as={Link}
+                to={"/preferences"}
+                className="m-2 bg-dark rounded text-light mb-2"
+              >
+                <i class="fa-solid fa-gear me-2"></i>
+                Preferences
+              </Nav.Link>
+            </Nav>
+            <Button className="m-2" size="lg" variant="dark" onClick={logout}>
+              Logout <i className="fa-solid fa-sign-out"></i>
+            </Button>
+          </div>
+          <div className="container-fluid flex flex-col justify-center items-center align-self-start mt-5">
+            <h3>Current User</h3>
+            <p>Username: {displayName}</p>
+            <p>Email: {email}</p>
+          </div>
+        </div>
+      ) : (
+        <LoginBtn />
+      )}
     </>
-  )
+  );
 }
