@@ -46,19 +46,39 @@ export default function Favorites(props) {
   return (
     <>
       {authorized ? (
-        <div className="flex flex-col justify-center">
-          <h1 className="m-5 text-center">Your favorite businesses!</h1>
+        <div
+          className="flex justify-center"
+          style={{
+            backgroundImage: "url('../images/beach.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="container-fluid h-screen pt-5 pb-4">
+            <div className="flex flex-col justify-center">
+              <h1 className="m-5 text-center">Your favorite businesses!</h1>
 
-          <div className="row m-3 g-1">
-            {favorites &&
-              favorites.length > 0 &&
-              favorites.map((biz) => <TestCard business={biz} />)}
+              <div className="row m-3 g-1">
+                {favorites &&
+                  favorites.length > 0 &&
+                  favorites.map((biz) => <TestCard business={biz} />)}
+              </div>
+            </div>
           </div>
         </div>
       ) : (
-        <div>
-          Please login to see your favorites!
-          <LoginBtn />
+        <div
+          className=""
+          style={{
+            backgroundImage: "url('../images/beach.jpg')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="text-center h-screen flex flex-col justify-center items-center ">
+            Please login to see your favorites!
+            <LoginBtn />
+          </div>
         </div>
       )}
     </>
