@@ -10,6 +10,7 @@ function App() {
 
   return (
     <>
+      <link rel="preload" href="../public/images" />
       <Router>
         <Navbar token={authToken} />
         <Routes>
