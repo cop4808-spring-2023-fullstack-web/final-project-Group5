@@ -1,11 +1,11 @@
 # COP4808 Final Project
+
 # <i>Odyssey</i> travel planner
 
 <h3>Description</h3>
 This application is full-stack web application that allows users to plan their future trips by selecting their destination and dates, then providing preferences for points of interest like the hotel, breakfast, lunch, dinner and an activity. Our application will find the most suitable points of interest based on the preferences utilizing the Yelp Fusion API to find these places. The user may also generate new recommendations for their current itinerary based on the pre-existing preferences.
 
 ![odyssey](https://user-images.githubusercontent.com/61981529/235550531-61bec32c-9f1a-4649-b196-5a2cffbfcc10.PNG)
-
 
 <h3>The Team</h3>
 <ul>
@@ -31,7 +31,7 @@ This application is full-stack web application that allows users to plan their f
 #
 
 <h3>The app is hosted and and can be accessed here</h3>
-<li><a href='https://odyssey-travel.netlify.app'>https://odyssey-travel.netlify.app</a>
+<li><a href='https://odyssey-heroku.herokuapp.com/'>https://odyssey-heroku.herokuapp.com/</a>
 
 #
 
@@ -47,16 +47,3 @@ There are a few simple steps to run the application in your local enviroment
 <li>Enter and run the command <i>npm start</i>
 <li>The app should open in your browser and be ready to go!
 </ol>
-
-
-
-
-
-
-
-
-
-
-
-
-
